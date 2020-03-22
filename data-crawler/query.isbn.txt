@@ -1,0 +1,8 @@
+https://noe-book.onleihe.com/noe-book/frontend/search,0-0-0-0-0-0-0-0-0-0-0.html?cmdId=703&pText=
+https://www.thalia.at/suche?filterPATHROOT=&sq=
+https://www.amazon.com/s?i=stripbooks&s=relevanceexprank&Adv-Srch-Books-Submit.x=29&Adv-Srch-Books-Submit.y=7&unfiltered=1&ref=sr_adv_b&rh=p_66%3A
+https://www.wikidata.org/wiki/Special:BookSources?isbn=
+https://openlibrary.org/search?isbn=
+https://www.google.com/search?tbs=bks:1&q=isbn:
+https://www.eopac.net/BGX431430/search/?q=
+https://www.google.com/search?hl=de&q=site%3Aeopac.net+%22ISBN%22+AND+

@@ -1,0 +1,3 @@
+http://data.opendataportal.at/dataset/geojson-daten-osterreich
+http://data.opendataportal.at/dataset/immobilienpreise-osterreich
+http://data.opendataportal.at/dataset/duales-osterreich

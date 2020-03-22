@@ -1,0 +1,6 @@
+https://firmen.wko.at/robots.txt
+https://www.thalia.at/robots.txt
+https://www.amazon.de/robots.txt
+https://www.onleihe.net/robots.txt
+https://www.google.at/robots.txt
+https://books.google.at/robots.txt
