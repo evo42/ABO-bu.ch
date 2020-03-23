@@ -124,6 +124,7 @@ $(document).ready(function ($) {
       reference: ref,
       userPhone: phone,
       userEmail: email,
+      sender: window.SEPAdigital.from,
       // shortId: $('#txRef').val().trim(),
       // ipn: "https://api.sepa.digital/v1/tx/inbox",
       // tip: parseFloat(($('#txTip') && $('#txTip').val() && $('#txTip').val().replace(',', '.').replace('€', '').trim()) || 0, 10),
