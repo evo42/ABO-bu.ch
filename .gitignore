@@ -2,7 +2,7 @@
 .DS_Store
 
 # dev
-./test-*
+test-*
 node_modules
 !data/,*
 data/*.json
