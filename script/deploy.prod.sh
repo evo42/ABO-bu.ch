@@ -17,7 +17,7 @@ echo ""
 echo "--- build frontend ---"
 echo ""
 
-rm -rf dist
+rm -rf ./dist && mkdir ./dist
 # npm run build
 cp -r ./public/* ./dist/ && cp -r ./public/.well-known ./dist/
 
@@ -34,21 +34,21 @@ echo "--- build docker ---"
 echo ""
 
 # build
-docker build -t abuch/A-bu.ch:latest .
+docker build -t abuch/a-bu.ch:latest .
 
 # tag
-docker tag abuch/A-bu.ch:latest rg.fr-par.scw.cloud/abuch/A-bu.ch:latest
+docker tag abuch/a-bu.ch:latest rg.fr-par.scw.cloud/abuch/a-bu.ch:latest
 
 # push
-docker push rg.fr-par.scw.cloud/abuch/A-bu.ch:latest
+docker push rg.fr-par.scw.cloud/abuch/a-bu.ch:latest
 
 
 echo ""
 echo "--- deploy stack to server ---"
 echo ""
 
-ssh root@ssh.A-bu.ch 'cd /home/ubuntu/A-bu.ch && git stash && git pull && touch ./data/inbox.json'
-ssh root@ssh.A-bu.ch 'cd /home/ubuntu/A-bu.ch && docker pull rg.fr-par.scw.cloud/abuch/A-bu.ch:latest && docker-compose down && docker-compose up -d'
+ssh root@ssh.A-bu.ch 'cd /home/ubuntu/ABO-bu.ch && git stash && git pull && touch ./data/inbox.json'
+ssh root@ssh.A-bu.ch 'cd /home/ubuntu/ABO-bu.ch && docker pull rg.fr-par.scw.cloud/abuch/a-bu.ch:latest && docker-compose down && docker-compose up -d'
 
 
 echo ""
