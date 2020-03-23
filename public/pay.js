@@ -265,9 +265,10 @@ $(document).ready(function ($) {
   function txAwaitingCheck(tx) {
     // return;
 
+    let that = this;
+
     console.log('### txAwaitingCheck', tx);
-
-
+    
     if (txCheckCount > 250) {
       clearInterval(txCheckInt);
       return;

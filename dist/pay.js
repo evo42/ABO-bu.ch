@@ -279,8 +279,59 @@ $(document).ready(function ($) {
       return;
     }
 
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", 'https://api.sepa.digital/v1/tx/' + tx.uuid);
+    xhr.send();
+    xhr.responseType = 'json';
+
+    xhr.onload = function () {
+
+      // process response
+      // clearInterval(window.txCheckInt);
+      var pr = xhr.response,
+        d = pr,
+        s = xhr.status;
+
+      l('response awaiting tx', pr);
+
+      l('- tx check', txCheckCount, s, d);
+      txCheckCount++;
+
+      //if (s == 'success') {
+
+      if (d.status == 'payment_settled' || d.status == 'payment_signed') {
+        console.log('-- tx success');
+        clearInterval(that.txCheckInt);
+
+        this.tx = pr;
+
+        localforage.removeItem('txAwaiting');
+        localforage.setItem('txLastPaid', JSON.stringify(txAwaiting));
+
+        $('#SEPAdigitalPRform').hide();
+        $('#SEPAdigitalPRcode').hide();
+        $('#SEPAdigitalPRsuccess').show();
+      } else if (d.status == 'created') {
+        // todo
+      } else {
+
+        // localforage.removeItem('txAwaiting');
+        // localforage.setItem('txLastPaid', JSON.stringify(txAwaiting));    
+      }
+      // } else {
+      // l('tx check error');
+      // clearInterval(txCheckInt);
+      // localforage.removeItem('txAwaiting');
+      //}
+
+    };
+
+    xhr.onerror = function () {
+      l('ERROR get TX status', xhr.error);
+      // v.loader = false;
+    };
     // tx.uuid
-    // var res = $.getJSON('//api.sepa.digital/v1/tx/' + tx.id + '?callback=?', function(d, s, xhr) {
+    /*
     var res = $.getJSON('//api.sepa.digital/v1/tx/' + tx.uuid, function (d, s, xhr) {
       console.log('- tx check', txCheckCount, s, d);
       txCheckCount++;
@@ -303,14 +354,6 @@ $(document).ready(function ($) {
 
           localStorage.removeItem('txAwaiting');
           localStorage.setItem('txLastPaid', JSON.stringify(txAwaiting));
-
-          /* fas fa-check-circle */
-          /*
-          var icon = $('#btn-sepa-pay i');
-          icon.removeClass().addClass('far fa-check-circle'); 
-
-          initModal('modal-trigger'); // PAYMENT SUCCESS
-          */
         } else if (d.status == 'created') {
           // todo
         } else {
@@ -330,6 +373,7 @@ $(document).ready(function ($) {
       clearInterval(txCheckInt);
       localStorage.removeItem('txAwaiting');
     });
+    */
 
     /*console.log(res.type);
     if (res) {

@@ -152,7 +152,7 @@ class SEPAdigital {
         const buyNowBtn = document.querySelector('.w3c-pr-btn-checkout') || document.querySelector('.w3c-pr-btn-donate');
         // const authBtn = document.querySelector('.sd-btn-auth');
         // var is_buying = false;
-        // var that = this;
+        // let that = this;
 
         try {
             // buyNowBtn.addEventListener('click', () => this.buyNowClick());
