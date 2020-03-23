@@ -1,5 +1,3 @@
-let timeoutID1, timeoutID2;
-
 /**
  * Prints the given error message.
  * @param {string} msg - The error message to print.
@@ -156,7 +154,7 @@ class SEPAdigital {
 
         try {
             // buyNowBtn.addEventListener('click', () => this.buyNowClick());
-            buyNowBtn.addEventListener('click', () => start);
+            buyNowBtn.addEventListener('click', () => startDonationRequest());
         } catch (e) {
             error("SEPAdigital Error: '" + e + "'");
         }
