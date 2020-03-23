@@ -20,9 +20,9 @@ RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 # RUN sudo pip3 install --upgrade pip && sudo pip3 install --no-cache-dir -r requirements.txt
 RUN pip3 install --upgrade pip && pip3 install --no-cache-dir -r requirements.txt
 
-# RUN mkdir -p /data && mkdir -p /data/sepa.digital
-# COPY api /data/sepa.digital/
-# COPY data /data/sepa.digital/
+# RUN mkdir -p /data && mkdir -p /data/A-bu.ch
+# COPY api /data/A-bu.ch/
+# COPY data /data/A-bu.ch/
 
 CMD [ "python3", "/usr/src/app/app/api.py" ]
 EXPOSE 8042
