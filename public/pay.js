@@ -15,9 +15,13 @@ $(document).ready(function ($) {
     sd,
     txCheckCount = 0,
     that,
+    postalcodes,
+    displayDate = formatDate(),
     txAwaiting = JSON.parse(localStorage.getItem('txAwaiting'));
 
   window.SEPAdigitalTxId = false;
+
+  $('#todayDate span').text(displayDate)
 
   // check for awaiting tx
   if (txAwaiting && txAwaiting.id != '') {
@@ -61,6 +65,28 @@ $(document).ready(function ($) {
     }, 20 * 1000);
     */
   }
+
+
+  let xhr = new XMLHttpRequest();
+  xhr.open("GET", '/data/postalcode.at.json');
+  xhr.send();
+  xhr.responseType = 'json';
+
+  xhr.onload = function () {
+    var d = xhr.response,
+      s = xhr.status;
+
+    l('response postalcode.at', d);
+
+    if (d.message == "OK") {
+      postalcodes = d.data;
+    }
+  };
+
+  xhr.onerror = function () {
+    l('ERROR get postalcode.at', xhr.error);
+  };
+
 
   function startAboInitRequest() {
     // var icon = $('#btn-sepa-pay i'),
@@ -146,24 +172,25 @@ $(document).ready(function ($) {
           }
         });
 
-        clipboard.on('success', function (e) {
-          l('-- ', pr['uuid'], e)
+        $('#shortUrl').val(pr['_links'].shortUrl);
 
-          // e.clearSelection();
+        $('#phonePass').val(window.SEPAdigital.from.phone);
+
+        clipboard.on('success', function (e) {
+          l('-- added shortUrl to the clipboard', pr['uuid'], e)
         });
 
         $('#SEPAdigitalPRform').hide();
+        $('#SEPAdigitalPRshop').hide();
+        $('#SEPAdigitalPRcheckout').show();
         $('#SEPAdigitalPRcode').show();
 
-        /*const fm = new FormatMoney({
-            decimals: 2
-        });*/
-
         $('#SEPAdigitalPRcode img').attr('src', pr['_links'].qrcode);
-        $('#SEPAdigitalPRcode h2').text('📚   ' + pr['name_to']);
-        $('#SEPAdigitalPRcode h1').html('💶   € ' + parseFloat(pr['amount'], 10).toFixed(2).replace('.', ',') + ' <i class="fas fa-circle-notch fa-spin has-text-info"></i>');
-        $('#SEPAdigitalPRcode h3').text('💳   ' + pr['iban_to']);
-        $('#SEPAdigitalPRcode h4').html('🌐   <a href="https://SEPA.id/091D1D14" target="_blank">https://SEPA.id/' + pr['shortId'] + '</a>');
+        $('#SEPAdigitalPRcode h2').text('🏪   ' + pr['name_to']);
+        $('#SEPAdigitalPRcode h1').html('💶   &nbsp;€ ' + parseFloat(pr['amount'], 10).toFixed(2).replace('.', ',') + ' <i style="margin-left: 12px" class="fas fa-circle-notch fa-spin hide-print has-text-info"></i>');
+        $('#SEPAdigitalPRcode h4').html('🧾   Buch Abo Kirchstetten'); // + pr['customerReference']
+        $('#SEPAdigitalPRcode h3 small').html('💳   IBAN: ' + pr['iban_to']);
+        $('#SEPAdigitalPRcode h5 small').html('🌐   Transfer-ID: <a href="https://SEPA.id/' + pr['shortId'] + '" target="_blank">SEPA.id/' + pr['shortId'] + '</a>');
       } else {
         l('**** ERROR on create payment request ***')
       }
@@ -174,6 +201,124 @@ $(document).ready(function ($) {
       // v.loader = false;
     };
   }
+
+  $('input, select').on('change', function (e) {
+    console.log(e, $(this).attr('id'));
+
+    let eId = $(this).attr('id'),
+      aboType = null, // ($('.radioAmount').val() && $('.radioAmount').val().trim()) || '', // $($('.radioAmount')[0].selectedOptions
+      phone = ($('#phone').val() && $('#phone').val().trim()) || '',
+      email = ($('#email').val() && $('#email').val().trim()) || '',
+      inputName = ($('#memberName').val() && $('#memberName').val().trim()) || '',
+      postalCode = ($('#postalCode').val() && $('#postalCode').val().trim()) || '',
+      streetAddress = ($('#streetAddress').val() && $('#streetAddress').val().trim()) || '',
+      addressLocality = ($('#addressLocality').val() && $('#addressLocality').val().trim()) || '',
+      amountDisplay = 0,
+      // amountDisplay = parseFloat($($('#aBuchAboType')[0].selectedOptions).data('amount'), 10).toFixed(2).replace('.', ',')
+      displayName = ''
+
+    if (!eId || eId.length < 1) {
+      return false;
+    }
+
+    $('.radioAmount').each(function () {
+      if ($(this).prop('checked') === true) {
+        aboType = $(this).val();
+        amountDisplay = parseFloat($(this).data('amount'), 10).toFixed(2).replace('.', ',');
+        console.log('--', aboType);
+      }
+      console.log($(this).prop('checked'));
+    });
+
+    if (eId == 'memberName') {
+      // do on member edit
+    }
+
+    displayName = displayName.split(' ')
+      .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+      .join(' ');
+
+    if (aboType && aboType.length > 1) {
+      switch (aboType) {
+        case "Familie":
+          displayName += aboType + ' '
+          break;
+      }
+    }
+
+    displayName += inputName;
+
+    if (phone && phone.length > 1 && phone.match(/^\d/) && !phone.startsWith(0)) {
+      phone = '+43' + phone.replace(/\D/g, '');
+    }
+
+    if (phone && phone.length > 1 && phone.substring(0, 2) == '00') {
+      phone = '+' + phone.substring(2, phone.length).replace(/\D/g, '');
+    }
+
+    if (phone && phone.length > 1 && phone.substring(0, 1) == '0') {
+      phone = '+43' + phone.substring(1, phone.length).replace(/\D/g, '');
+    }
+
+    if (phone && phone.length > 1 && phone.substring(0, 1) == '+') {
+      phone = '0' + phone.substring(3, phone.length).replace(/\D/g, '');
+    }
+
+    if (phone && phone.length > 1 && phone.substring(0, 2) == '00') {
+      phone = '' + phone.substring(1, phone.length).replace(/\D/g, '');
+    }
+
+    if (email && email.length > 1 && email.indexOf('@') > 0) {
+      email = email.trim().toLowerCase();
+    }
+
+    if (amountDisplay == '0,00') {
+      amountDisplay = '';
+    }
+
+    if (postalcodes.length > 3 && postalCode.length > 3) {
+      let obj = postalcodes.find(obj => obj.plz == parseInt(postalCode.trim(), 10));
+      addressLocality = obj.ort;
+    }
+
+    $('#address [property="name"]').html(displayName)
+    $('#address [property="streetAddress"]').html(streetAddress)
+    $('#address [property="postalCode"]').html(postalCode)
+    $('#address [property="addressLocality"]').html(addressLocality)
+
+    $('#phone').val(phone)
+
+    $('#amount').val(amountDisplay)
+
+    if (aboType && aboType.length > 2) {
+      $('#aboType strong').text(aboType)
+    }
+
+    window.SEPAdigital.from = {
+      "amount": parseFloat(amountDisplay.replace(',', '.'), 10).toFixed(2),
+      "amountDisplay": amountDisplay,
+      "aboType": aboType,
+      "name": displayName,
+      "streetAddress": streetAddress,
+      "postalCode": postalCode,
+      "addressLocality": addressLocality,
+      "email": email,
+      "phone": phone.replace('0', '+43'),
+      "displayName": displayName,
+    }
+  });
+
+  // on change aBuchAboType display new price
+  $('#aBuchAboType').on('change', function (e) {
+    let aboType = $(this).val().trim(),
+      amountDisplay = parseFloat($($(this)[0].selectedOptions).data('amount'), 10).toFixed(2).replace('.', ',')
+
+    $('#amount').val(amountDisplay);
+
+    if ($('#memberName').val().trim().length > 3) {
+      window.SEPAdigital.to.reason = aboType + ' - ' + slugify($('#memberName').val());
+    }
+  });
 
   // on blur check for eIDAS ID (email)
   $('#userId').on('blur', function (e) {
@@ -203,7 +348,7 @@ $(document).ready(function ($) {
     let that = this;
 
     console.log('### txAwaitingCheck', tx);
-    
+
     if (txCheckCount > 250) {
       clearInterval(txCheckInt);
       return;
@@ -246,6 +391,8 @@ $(document).ready(function ($) {
 
         $('#SEPAdigitalPRform').hide();
         $('#SEPAdigitalPRcode').hide();
+        $('#SEPAdigitalPRshop').hide();
+        $('#SEPAdigitalPRcheckout').show();
         $('#SEPAdigitalPRsuccess').show();
         $('#SEPAdigitalPRcode h1 i').removeClass().addClass('far fa-check-circle has-text-success');
       } else if (d.status == 'created') {
@@ -368,4 +515,21 @@ function slugify(string) {
     .replace(/\-\-+/g, '-') // Replace multiple - with single -
     .replace(/^-+/, '') // Trim - from start of text
     .replace(/-+$/, '') // Trim - from end of text
+}
+
+function formatDate(date) {
+
+  if (!date) {
+    date = new Date();
+  }
+
+  var d = new Date(date),
+    month = '' + (d.getMonth() + 1),
+    day = '' + d.getDate(),
+    year = d.getFullYear();
+
+  if (month.length < 2) month = '0' + month;
+  if (day.length < 2) day = '0' + day;
+
+  return [day, month, year].join('.');
 }

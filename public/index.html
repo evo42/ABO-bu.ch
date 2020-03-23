@@ -46,7 +46,7 @@
                 "@type": "Person",
                 "givenName": "René",
                 "familyName": "Kapusta",
-                "alternateName": "A-bu.ch AG",
+                "alternateName": "A-bu.ch Online",
                 "url": "https://A-bu.ch",
                 "email": "A-bu.ch@K42.ventures",
                 "telephone": "+43 2742 44303",
@@ -120,7 +120,9 @@
 
     <style type="text/css">
         @media print {
-            .hide {
+
+            .hide,
+            .hide-print {
                 display: none;
             }
         }
@@ -131,7 +133,31 @@
 
         q {
             quotes: none;
+            __font-style: italic;
             /* quotes: "« " " »" "‹" "›"; */
+        }
+
+        q u {
+            text-decoration: underline;
+        }
+
+        .aboTypes label {
+            width: 150px;
+            font-size: small;
+        }
+
+        .aboTypes label.radio-smaller {
+            width: 120px;
+        }
+
+        .aboTypes input {
+            margin-right: 5px;
+        }
+
+        .bgGif {
+            background: url("assets/giphy-VcizxCUIgaKpa-tumblr-fadingchildhood.webp") no-repeat;
+            max-width: 480px;
+            max-height: 360px;
         }
 
         section,
@@ -152,31 +178,298 @@
 
             <section id="SEPAdigitalShop">
                 <figure class="image is-3by1">
+
+                    <img src="./assets/robert-anasch-McX3XuJRsUM-unsplash.header.jpg"
+                        title="assorted-color filling book lot 📸 by Robert Anasch @ Unsplash" />
+                    <!--
                     <img src="./assets/asterisk-q_gjDWf9ths-unsplash.jpg"
                         title="open wide book 📸 ASTERISK @ Unsplash" />
+                    -->
                 </figure>
 
-                <h1 class="title is-2" style="padding: 42px 42px 0 42px; margin: 42px 42px 21px 42px;">
-                    « 📚 <q cite="https://wikiquote.org/wiki/Young_Wizards#So_You_Want_to_Be_a_Wizard" style="font-style: italic;">
-                        Reading one book is like eating one potato chip.</q> »
+                <nav class="level">
+                    <!-- Left side -->
+                    <div class="level-left">
+                        <div class="level-item">
+                            <div id="address" class="has-text-left" style="margin: 0 0 0 123px; min-height: 75px;">
+                                <span property="name"></span>
+                                <div class="address" property="address" typeof="PostalAddress">
+                                    <span property="streetAddress">&nbsp;</span><br>
+                                    <span property="postalCode">&nbsp;</span>
+                                    <span property="addressLocality">&nbsp;</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right side -->
+                    <div class="level-right" style="margin-right: 42px;">
+                        <p class="level-item" id="aboType">BUCH Abo:&nbsp;<strong>nicht gewählt</strong></p>
+                        <p class="level-item" id="todayDate">Datum:&nbsp;<span></span></p>
+                    </div>
+                </nav>
+                
+
+                <h1 class="title is-2" style="padding: 21px 42px 0 42px; margin: 42px 42px 21px 42px;">
+                    « 📚 <q cite="https://wikiquote.org/wiki/Young_Wizards#So_You_Want_to_Be_a_Wizard"
+                        __breaks_print-css_style="font-style: italic;">
+                        Reading <u>one</u> book is like eating <u>one</u> potato chip.</q> »
                 </h1>
 
-                <small> — <a href="https://wikiquote.org/wiki/Young_Wizards#So_You_Want_to_Be_a_Wizard" target="_blank">
+                <small class="has-text-grey-light"> — <a class="has-text-grey-light"
+                        href="https://wikiquote.org/wiki/Young_Wizards#So_You_Want_to_Be_a_Wizard" target="_blank">
                         Diane Duane @ «Young Wizards»</a>
                 </small>
 
-                <h2 class="title is-3" style="margin: 42px auto 0px auto;">Buch ABO Jahreskarte 2020/21</h2>
+                <h2 class="title is-3 has-text-success" style="margin: 42px auto 0px auto;">BUCH Abo Jahreskarte 2020/21
+                </h2>
+                <h3>Öffentliche Bücherei der Marktgemeinde Kirchstetten, NÖ</h3>
             </section>
 
-            <section id="SEPAdigitalPRform" style="display: inline-block; margin-top: 30px;">
-                <input id="amount" type="hidden" value="42.42" />
 
+            <section id="SEPAdigitalPRshop" style="display: inline-block; margin-top: 30px;">
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Mitglied</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <p class="control is-expanded has-icons-left">
+                                <input class="input" type="text" id="memberName" placeholder="Name">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-user"></i>
+                                </span>
+                            </p>
+                            <p class="help" style="text-align: left;">Name / Familienname</p>
+                        </div>
+
+                        <div class="field">
+                            <div class="field-body">
+                                <div class="field is-expanded">
+                                    <div class="field has-addons">
+                                        <p class="control">
+                                            <a class="button is-static">
+                                                🇦🇹
+                                            </a>
+                                        </p>
+                                        <p class="control is-expanded">
+                                            <input class="input" id="phone" type="tel" placeholder="Telefonnummer">
+                                        </p>
+                                    </div>
+                                    <p class="help" style="text-align: left;">Format: 0664 0815123</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field is-horizontal">
+                    <div class="field-label"></div>
+                    <div class="field-body">
+                        <div class="field is-expanded">
+                            <div class="field has-addons">
+                                <p class="control is-expanded has-icons-left has-icons-right">
+                                    <input class="input" id="email" type="email" placeholder="E-Mail">
+                                    <span class="icon is-small is-left">
+                                        <i class="fas fa-envelope"></i>
+                                    </span>
+                                    <span class="icon is-small is-right hide">
+                                        <i class="fas fa-check"></i>
+                                    </span>
+                                </p>
+                            </div>
+                            <p class="help" style="text-align: left;">Deine E-Mail Adresse und / oder Telefonnummer zur
+                                Kontaktaufnahme.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Adresse</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <p class="control is-expanded has-icons-left">
+                                <input class="input is-small" type="text" id="streetAddress" placeholder="Anschrift">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </span>
+                            </p>
+                            <p class="help" style="text-align: left;">Straße und Haus- / Türnummer.</p>
+                        </div>
+
+                        <div class="field">
+                            <div class="field-body">
+                                <div class="field is-expanded">
+                                    <div class="field has-addons">
+                                        <p class="control">
+                                            <a class="button is-static is-small">
+                                                🇦🇹
+                                            </a>
+                                        </p>
+                                        <p class="control is-expanded">
+                                            <input id="postalCode" size="10" class="input is-small" type="number"
+                                                placeholder="PLZ">
+                                        </p>
+                                    </div>
+                                    <p class="help" style="text-align: left;">Postleitzahl aus Österreich.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Auswahl</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field is-narrow">
+                            <div class="control aboTypes">
+                                <label class="radio radio-smaller">
+                                    <input id="AboK" class="radioAmount" value="Kind" data-amount="1" type="radio"
+                                        name="aboType">
+                                    Kinder < 19 € 1,- </label> <label class="radio">
+                                        <input id="AboF" class="radioAmount" value="Familie" data-amount="42"
+                                            type="radio" name="aboType">
+                                        Familie (1 EW+) € 42,-
+                                </label>
+                                <label class="radio radio-smaller">
+                                    <input id="Spende" class="radioAmount" value="Spende" data-amount="123" type="radio"
+                                        name="aboType">
+                                    Spende € 123,-
+                                </label>
+                                <br />
+                                <label class="radio radio-smaller">
+                                    <input id="AboE" class="radioAmount" value="Erwachsener" data-amount="52"
+                                        type="radio" name="aboType">
+                                    19+ Jahre € 52,-
+                                </label>
+                                <label class="radio">
+                                    <input id="AboO" class="radioAmount" value="Organisation" data-amount="365"
+                                        type="radio" name="aboType">
+                                    Organisation € 365,-
+                                </label>
+                                <label class="radio radio-smaller">
+                                    <input id="Sponsor" class="radioAmount" value="Sponsor" data-amount="520"
+                                        type="radio" name="aboType">
+                                    Sponsor € 520,-
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Auswahl</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field is-narrow">
+                            <div class="control">
+                                <div class="select is-fullwidth">
+                                    <select id="aBuchAboType">
+                                        <option value="" data-amount="0">Abo-Art wählen</option>
+                                        <option value="Kind" data-amount="1">unter 19 Jahren</option>
+                                        <option value="Erwachsener" data-amount="52">19 Jahre und älter</option>
+                                        <option value="Familie" data-amount="42">Familie (1E+)</option>
+                                        <option value="Organisation" data-amount="365">Organisation</option>
+                                        <option value="Spende" data-amount="123">Freie Spende</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+-->
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Betrag</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <p class="control has-icons-left">
+                                <input id="amount" class="input is-static" type="text" value="" readonly>
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-euro-sign"></i>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+
+            <section id="SEPAdigitalPRcheckout" style="display: none; margin-top: 30px;">
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <p class="control is-expanded has-icons-left">
+                                <input class="input is-small is-narrow" style="max-width: 250px" type="url" id="shortUrl" placeholder="SEPA.id URI">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-receipt"></i>
+                                </span>
+                            </p>
+                            <p class="help" style="text-align: left;">SEPA.id der Transaktion.</p>
+                        </div>
+
+                        <div class="field">
+                            <div class="field-body">
+                                <div class="field is-expanded">
+                                    <div class="field has-addons">
+                                        <p class="control">
+                                            <a class="button is-static is-small">
+                                                🇦🇹
+                                            </a>
+                                        </p>
+                                        <p class="control is-expanded">
+                                            <input class="input is-small is-narrow" style="max-width: 142px" id="phonePass" type="tel" placeholder="Telefonnummer">
+                                        </p>
+                                    </div>
+                                    <p class="help" style="text-align: left;"><i class="fab fa-apple"></i> Wallet / <i class="fab fa-google"></i> Pay <a href="#">Pass zusenden</a>.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 
+                <div class="field is-horizontal">
+                    <div class="field-label"></div>
+                    <div class="field-body">
+                        <div class="field is-expanded">
+                            <div class="field has-addons">
+                                <p class="control is-expanded has-icons-left has-icons-right">
+                                    <input class="input is-small" id="email" type="email" placeholder="E-Mail">
+                                    <span class="icon is-small is-left">
+                                        <i class="fas fa-envelope"></i>
+                                    </span>
+                                    <span class="icon is-small is-right hide">
+                                        <i class="fas fa-check"></i>
+                                    </span>
+                                </p>
+                            </div>
+                            <p class="help" style="text-align: left;">Deine E-Mail Adresse und / oder Telefonnummer zur
+                                Kontaktaufnahme.</p>
+                        </div>
+                    </div>
+                </div>
+                -->
+            </section>
+
+
+            <section id="SEPAdigitalPRform" style="display: inline-block; margin-top: 30px;">
                 <!--  ✱ ✱ ✱  S€PA.digital pay button  ✱ ✱ ✱  -->
                 <button class="w3c-pr-btn-checkout button is-medium is-success">
                     <span class="icon is-small">
                         <i class="fas fa-check"></i>
                     </span>
-                    <span>Jetzt Buch ABO Jahreskarte kaufen [12 Monate]</span>
+                    <span>BUCH Abo 📚 Jetzt Jahreskarte kaufen</span>
                 </button>
 
                 <div id="w3c-pr-msg" class="hide"></div>
@@ -185,33 +478,78 @@
             </section>
 
             <section id="SEPAdigitalPRcode" style="display: none; margin-top: 30px;">
-                <img width="250px" src="" style="transform: rotate(90deg); margin: 21px 0 42px 0;"/>
-                <h1 class="is-size-4">SEPA.digital TX amount</h1>
-                <h2 class="is-size-4">SEPA.digital TX recipient</h2>
-                <h3>SEPA.digital TX IBAN</h3>
-                <h4 style="margin-top: 12px;">SEPA.digital TX URI</h4>
+                <div class="level" style="max-width: 500px; margin: 0 auto;">
+                    <div class="level-right is-pulled-right">
+                        <div class="level-item">
+                            <img style="transform: rotate(90deg); margin: 21px 0 21px 0; width: 250px;"
+                                src="https://bulma.io/images/placeholders/128x128.png">
+                        </div>
+                    </div>
+                    <div class="level-left is-pulled-left" style="justify-content: left;">
+                        <div class="level-item" style="justify-content: left; text-align: left;">
+                            <ul>
+                                <li>
+                                    <h1 style="margin: 0;" class="is-size-4 is-clearfix">
+                                        SEPA.digital TX amount
+                                    </h1>
+                                </li>
+                                <li>
+                                    <h4 style="margin: 6px 0 0 0;" class="is-clearfix">
+                                        SEPA.digital TX Reference
+                                    </h4>
+                                </li>
+                                <li>
+                                    <h2 class="level-item is-clearfix _is-size-4"
+                                        style="text-align: left; margin: 0; align-items: left; justify-content: left;">
+                                        SEPA.digital TX recipient
+                                    </h2>
+                                </li>
+                                <li>
+                                    <h3 class="level-item is-clearfix" style="margin: 6px 0 0 0;">
+                                        <small>SEPA.digital TX IBAN</small>
+                                    </h3>
+                                </li>
+                                <li>
+                                    <h5 class="level-item is-clearfix"
+                                        style="text-align: left; margin: 0; align-items: left; justify-content: left;">
+                                        <small>SEPA.digital TX URI</small>
+                                    </h5>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="level" style="margin-top: 42px">
+                    <p class="level-item has-text-centered">
+                        <small>
+                            <strong>Bezahlen</strong>❔ Scanne den
+                            <abbr title="* Euroraum - Single Euro Payments Area">SEPA</abbr> <abbr
+                                title="* 2D Barcode - Quick Response code">QR Code</abbr>
+                            <a title="Bezahlen war noch nie so einfach. Mit der Raiffeisen ELBA-App und dem integrierten QR-Code-Scann. [Video]"
+                                href="https://youtu.be/iJDTw9eROk4" target="_blank">
+                                mit deiner Bank-App
+                            </a> oder überweise den Betrag manuell 🖊️
+                        </small>
+                    </p>
+                </div>
             </section>
 
             <section id="SEPAdigitalPRsuccess" style="display: none;">
-                <div class="container">
+                <div class="container bgGif" style="top: -30px; margin-top: 42px; min-height: 360px; min-width: 480px;">
                     <i class="far fa-check-circle _is-size-1 has-text-success"
-                        style="font-size: 84px; margin: 21px auto;"></i>
-                </div>
-
-                <div class="container">
-                    <div>
-                        <img class="pay-success-gif" src="assets/giphy-VcizxCUIgaKpa-tumblr-fadingchildhood.webp" />
-                    </div>
+                        style="font-size: 142px; margin: 100px auto"></i>
                 </div>
             </section>
         </section>
     </div>
 
-    <footer class="footer">
+    <footer class="footer hide-print">
         <div class="content has-text-centered"></div>
         <small>
-            ©️ S€PA.digital ― Institut für Zahlungsverkehr
-            📞 <a href="#">+43 2742 44 303</a> &nbsp;&nbsp; 📧 &nbsp; <a href="#">inbox@SEPA.digital</a>
+            ©️ <a href="https://SEPA.digital" target="_blank">S€PA.digital ― Institut für Zahlungsverkehr</a><br />
+            📞 <a href="tel:+43274244303">+43 2742 44 303</a> &nbsp;&nbsp; 📧 &nbsp; <a
+                href="mailto:inbox/@/SEPA/dot/digital">inbox@SEPA.digital</a>
         </small>
         </div>
     </footer>
@@ -223,8 +561,8 @@
 
     <!-- W3C Payment Request API for {Instant} SEPA Credit Transfer via SEPA.digital -->
     <script src="/pay/w3c-pr-api.js?032308"></script>
-    <script src="/pay.js?032308"></script>
     <script src="/pay/A-bu.ch.js?032308"></script>
+    <script src="/pay.js?032308"></script>
     <!-- script src="/pay/merchant.js?032308"></script -->
 
     <script src="https://cdn.jsdelivr.net/npm/iban@0.0.14/iban.min.js"></script>
