@@ -156,7 +156,7 @@ class SEPAdigital {
 
         try {
             // buyNowBtn.addEventListener('click', () => this.buyNowClick());
-            buyNowBtn.addEventListener('click', () => startAboInitRequest());
+            buyNowBtn.addEventListener('click', () => window.prInitTx());
         } catch (e) {
             error("SEPAdigital Error: '" + e + "'");
         }
