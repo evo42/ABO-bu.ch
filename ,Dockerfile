@@ -1,0 +1,29 @@
+FROM robpco/nginx-uwsgi:py3.6
+
+RUN apt-get update && apt-get install -y \
+    python-distutils \
+    sudo \
+    curl
+
+RUN mkdir -p /usr/src/app
+
+WORKDIR /usr/src/app
+
+COPY . /usr/src/app/
+# COPY docker/nginx/instant.conf /var/nginx/config.d/
+
+RUN adduser --disabled-password --gecos '' docker
+RUN adduser docker sudo
+RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+
+# USER docker
+# RUN sudo pip3 install --upgrade pip && sudo pip3 install --no-cache-dir -r requirements.txt
+RUN pip3 install --upgrade pip && pip3 install --no-cache-dir -r requirements.txt
+
+# RUN mkdir -p /data && mkdir -p /data/sepa.digital
+# COPY api /data/sepa.digital/
+# COPY data /data/sepa.digital/
+
+CMD [ "python3", "/usr/src/app/app/api.py" ]
+EXPOSE 8042
+

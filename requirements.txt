@@ -1,0 +1,17 @@
+sanic == 19.9 # 19.6.3 # 19.12
+# sanic-cors
+sqlalchemy
+python-stdnum
+MechanicalSoup
+PyYAML
+lxml
+psycopg2
+environs
+requests
+# websockets == 7.*
+# sanic-envconfig
+# BeautifulSoup4
+# Pillow
+# databases== 0.2.4
+# databases [postgresql] 
+# asyncpg

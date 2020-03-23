@@ -1,6 +1,12 @@
 # osx
 .DS_Store
 
+# dev
+./test-*
+node_modules
+!data/,*
+data/*.json
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -13,7 +19,7 @@ __pycache__/
 .Python
 build/
 develop-eggs/
-dist/
+# dist/
 downloads/
 eggs/
 .eggs/
