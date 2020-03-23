@@ -8,7 +8,7 @@ $(document).ready(function ($) {
     txCheckInt,
     txCheckCount = 0,
     txSendAwaiting,
-    icon = $('#btn-sepa-instant-pay i'),
+    icon = $('.w3c-pr-btn-checkout i'),
     currentTs = Math.floor(Date.now() / 1000),
     timeoutID1,
     timeoutID2,
@@ -160,10 +160,10 @@ $(document).ready(function ($) {
         });*/
 
         $('#SEPAdigitalPRcode img').attr('src', pr['_links'].qrcode);
-        $('#SEPAdigitalPRcode h2').text('😷   ' + pr['name_to']);
-        $('#SEPAdigitalPRcode h1').text('💶   ' + parseFloat(pr['amount'], 10).toFixed(2).replace('.', ','));
+        $('#SEPAdigitalPRcode h2').text('📚   ' + pr['name_to']);
+        $('#SEPAdigitalPRcode h1').html('💶   € ' + parseFloat(pr['amount'], 10).toFixed(2).replace('.', ',') + ' <i class="fas fa-circle-notch fa-spin has-text-info"></i>');
         $('#SEPAdigitalPRcode h3').text('💳   ' + pr['iban_to']);
-        $('#SEPAdigitalPRcode h4').text('🌐   https://SEPA.id/' + pr['shortId']);
+        $('#SEPAdigitalPRcode h4').html('🌐   <a href="https://SEPA.id/091D1D14" target="_blank">https://SEPA.id/' + pr['shortId'] + '</a>');
       } else {
         l('**** ERROR on create payment request ***')
       }
@@ -173,72 +173,6 @@ $(document).ready(function ($) {
       l('ERROR init EPC QR', error);
       // v.loader = false;
     };
-  }
-
-  function txAwaitingSend() {
-    // var icon = $('#btn-sepa-pay i'),
-    var currentTs = Math.floor(Date.now() / 1000),
-      email,
-      phone;
-
-    window.SEPAdigitalTxId = false;
-
-    // icon.removeClass().addClass('fas fa-circle-notch fa-spin'); /* fas fa-clock */
-
-    if ($('#userId').length > 0 && $('#userId').val().trim().indexOf('@')) {
-      email = $('#userId').val().trim();
-    } else if ($('#userId').length > 0 && $('#userId').val().trim().indexOf('+')) {
-      phone = $('#userId').val().trim();
-    }
-
-    txAwaiting = {
-      correlationId: ($('#receiverIban').val() + '.' + $('#txRef').val() + '.' + currentTs).replace(/\s+/g, '').trim(),
-      iban: $('#receiverIban').val().replace(/\s+/g, '').trim(),
-      bic: $('#receiverBic').val().trim(),
-      amount: parseFloat($('#txAmount').val().replace(',', '.').replace('€', '').trim(), 10),
-      name: $('#receiverName').val().trim(),
-      customerId: $('#userId').val().trim(),
-      userPhone: phone,
-      userEmail: email,
-      // reference: $('#txRef').val().trim(),
-      // shortId: $('#txRef').val().trim(),
-      // ipn: "https://api.sepa.digital/v1/tx/inbox",
-    };
-
-    /* store before send and update after receiving data */
-    localStorage.setItem('txAwaiting', JSON.stringify(txAwaiting));
-    if (txCheckInt) {
-      clearInterval(txCheckInt);
-    }
-
-    $.post('//api.sepa.digital/credit-transfer', JSON.stringify(txAwaiting), function (response) {
-      // process response
-      console.log('response awaiting tx', response);
-      // clearInterval(txCheckInt);
-      var pr = response;
-
-      window.SEPAdigitalTxId = pr.uuid;
-
-      if (response && response['_links'] && response['_links'].payment) {
-        $('.cd-sepa-digital-code').attr('src', pr['_links'].qrcode);
-
-        $('#link-sepa-digital').attr('href', pr['_links'].payment)
-        $('#link-bankapp').attr('href', pr['_links'].bankapp)
-
-        $('#txRef').val(pr['shortId'])
-
-        $('#payment-section').show();
-
-        txSendAwaiting = pr;
-        localStorage.setItem('txAwaiting', JSON.stringify(response));
-        txCheckInt = setInterval(function () {
-          txAwaitingCheck(txSendAwaiting);
-        }, 1500);
-      } else {
-        console.log('**** ERROR on create payment request ***')
-      }
-
-    })
   }
 
   // on blur check for eIDAS ID (email)
@@ -313,6 +247,7 @@ $(document).ready(function ($) {
         $('#SEPAdigitalPRform').hide();
         $('#SEPAdigitalPRcode').hide();
         $('#SEPAdigitalPRsuccess').show();
+        $('#SEPAdigitalPRcode h1 i').removeClass().addClass('far fa-check-circle has-text-success');
       } else if (d.status == 'created') {
         // todo
       } else {

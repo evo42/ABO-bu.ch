@@ -28,7 +28,7 @@
 
 
     <!-- 🔻🔻 Add the following HTML code to the website / app where you want to receive #SEPA #InstantPayments                                                                     -->
-    <link rel="manifest" href="/pay/instant.json?032306">
+    <link rel="manifest" href="/pay/instant.json?032308">
 
 
     <!-- 🔻🔻 Accept payments instantly for the following organisation directly to their SEPA €UR bank account.
@@ -156,8 +156,8 @@
                         title="open wide book 📸 ASTERISK @ Unsplash" />
                 </figure>
 
-                <h1 class="title is-1" style="padding: 42px 42px 0 42px; margin: 42px 42px 21px 42px;">
-                    « 📚 <q cite="https://wikiquote.org/wiki/Young_Wizards#So_You_Want_to_Be_a_Wizard">
+                <h1 class="title is-2" style="padding: 42px 42px 0 42px; margin: 42px 42px 21px 42px;">
+                    « 📚 <q cite="https://wikiquote.org/wiki/Young_Wizards#So_You_Want_to_Be_a_Wizard" style="font-style: italic;">
                         Reading one book is like eating one potato chip.</q> »
                 </h1>
 
@@ -165,10 +165,10 @@
                         Diane Duane @ «Young Wizards»</a>
                 </small>
 
-                <h2 class="title is-3" style="margin: 42px 0;">Buch ABO Jahreskarte 2020/21</h2>
+                <h2 class="title is-3" style="margin: 42px auto 0px auto;">Buch ABO Jahreskarte 2020/21</h2>
             </section>
 
-            <section id="SEPAdigitalPRform">
+            <section id="SEPAdigitalPRform" style="display: inline-block; margin-top: 30px;">
                 <input id="amount" type="hidden" value="42.42" />
 
                 <!--  ✱ ✱ ✱  S€PA.digital pay button  ✱ ✱ ✱  -->
@@ -185,15 +185,24 @@
             </section>
 
             <section id="SEPAdigitalPRcode" style="display: none; margin-top: 30px;">
-                <img width="250px" src="" />
-                <h2>SEPA.digital recipient</h2>
-                <h3>SEPA.digital TX amount</h3>
-                <h4>SEPA.id TX URI</h4>
+                <img width="250px" src="" style="transform: rotate(90deg); margin: 21px 0 42px 0;"/>
+                <h1 class="is-size-4">SEPA.digital TX amount</h1>
+                <h2 class="is-size-4">SEPA.digital TX recipient</h2>
+                <h3>SEPA.digital TX IBAN</h3>
+                <h4 style="margin-top: 12px;">SEPA.digital TX URI</h4>
             </section>
 
-            <section id="SEPAdigitalPRsuccess" style="display: none; margin-top: 30px;">
-                <i class="far fa-check-circle is-size-1 has-text-success"
-                    style="margin-top: 60px; font-size: 142px;"></i>
+            <section id="SEPAdigitalPRsuccess" style="display: none;">
+                <div class="container">
+                    <i class="far fa-check-circle _is-size-1 has-text-success"
+                        style="font-size: 84px; margin: 21px auto;"></i>
+                </div>
+
+                <div class="container">
+                    <div>
+                        <img class="pay-success-gif" src="assets/giphy-VcizxCUIgaKpa-tumblr-fadingchildhood.webp" />
+                    </div>
+                </div>
             </section>
         </section>
     </div>
@@ -213,10 +222,10 @@
     <script src="https://cdn.jsdelivr.net/npm/cash-dom@6.0.2/dist/cash.min.js"></script>
 
     <!-- W3C Payment Request API for {Instant} SEPA Credit Transfer via SEPA.digital -->
-    <script src="/pay/w3c-pr-api.js?032306"></script>
-    <script src="/pay.js?032306"></script>
-    <script src="/pay/A-bu.ch.js?032306"></script>
-    <!-- script src="/pay/merchant.js?032306"></script -->
+    <script src="/pay/w3c-pr-api.js?032308"></script>
+    <script src="/pay.js?032308"></script>
+    <script src="/pay/A-bu.ch.js?032308"></script>
+    <!-- script src="/pay/merchant.js?032308"></script -->
 
     <script src="https://cdn.jsdelivr.net/npm/iban@0.0.14/iban.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jsonld@3.0.1/dist/jsonld.min.js"></script>
