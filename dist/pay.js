@@ -8,6 +8,12 @@ $(document).ready(function ($) {
     txCheckInt,
     txCheckCount = 0,
     txSendAwaiting,
+    icon = $('#btn-sepa-instant-pay i'),
+    currentTs = Math.floor(Date.now() / 1000),
+    timeoutID1,
+    timeoutID2,
+    sd,
+    txCheckCount = 0,
     txAwaiting = JSON.parse(localStorage.getItem('txAwaiting'));
 
   window.SEPAdigitalTxId = false;
@@ -39,10 +45,9 @@ $(document).ready(function ($) {
       $('.hide-while-txAwaitReload').hide();
       // $('.show-while-txAwaitReload').show();
 
-      var icon = $('#btn-sepa-instant-pay i'),
-        currentTs = Math.floor(Date.now() / 1000);
-
-      icon.removeClass().addClass('fas fa-circle-notch fa-spin');
+      if (icon.length > 0) {
+        icon.removeClass().addClass('fas fa-circle-notch fa-spin');
+      }
     }
 
   } else {
@@ -56,16 +61,128 @@ $(document).ready(function ($) {
     */
   }
 
-  function txAwaitingSend() {
+  function startAboInitRequest() {
     // var icon = $('#btn-sepa-pay i'),
-    var icon = $('#btn-sepa-instant-pay i'),
-      currentTs = Math.floor(Date.now() / 1000),
+    var currentTs = Math.floor(Date.now() / 1000),
       email,
       phone;
 
     window.SEPAdigitalTxId = false;
 
-    icon.removeClass().addClass('fas fa-circle-notch fa-spin'); /* fas fa-clock */
+    if (icon.length > 0) {
+      icon.removeClass().addClass('fas fa-circle-notch fa-spin'); /* fas fa-clock */
+    }
+
+    if ($('#userId').length > 0 && $('#userId').val().trim().indexOf('@')) {
+      email = $('#userId').val().trim();
+    } else if ($('#userId').length > 0 && $('#userId').val().trim().indexOf('+')) {
+      phone = $('#userId').val().trim();
+    }
+
+    window.SEPAdigitalTxId = false;
+    let amountInput = $('#amount').val() || 1;
+    let amount = parseFloat(parseFloat(amountInput + ''.replace(',', '.').trim(), 10).toFixed(2), 10),
+      ibanTo = window.SEPAdigital.to.iban.replace(/\s/g, '') || '',
+      bicTo = window.SEPAdigital.to.bic || '',
+      nameTo = window.SEPAdigital.to.recipient.alternateName || '',
+      ref = window.SEPAdigital.to.reason || '';
+
+    txAwaiting = {
+      correlationId: 'A-bu.ch-' + ibanTo + '-' + ref.replace(/\W+/g, '') + '-' + currentTs,
+      iban: ibanTo,
+      bic: bicTo,
+      amount: amount,
+      name: nameTo,
+      customerId: '',
+      reference: ref,
+      userPhone: phone,
+      userEmail: email,
+      // shortId: $('#txRef').val().trim(),
+      // ipn: "https://api.sepa.digital/v1/tx/inbox",
+      // tip: parseFloat(($('#txTip') && $('#txTip').val() && $('#txTip').val().replace(',', '.').replace('€', '').trim()) || 0, 10),
+      // ipn: "https://webhook.site/cf3f287f-ae8c-4ece-8ddd-6a519341ffcd"
+    };
+
+    l('send awaiting tx', txAwaiting);
+
+    /* store before send and update after receiving data */
+    localforage.setItem('txAwaiting', JSON.stringify(txAwaiting));
+    if (window.txCheckInt) {
+      clearInterval(window.txCheckInt);
+    }
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", 'https://api.sepa.digital/credit-transfer');
+    xhr.send(JSON.stringify(txAwaiting));
+    xhr.responseType = 'json';
+
+    xhr.onload = function () {
+      // process response
+      l('--- response awaiting tx', xhr.response || 'ERROR no response data');
+      // clearInterval(window.txCheckInt);
+      var pr = xhr.response;
+      var that = this;
+
+      l(' *** new tx data', pr['_links']);
+
+      window.SEPAdigitalTxId = pr.uuid;
+
+      if (pr && pr['_links'] && pr['_links'].payment) {
+
+        this.tx = this.txSent = this.txAwaiting = pr;
+        this.qrcodeUrl = pr['_links'].qrcodeUrl;
+
+        localforage.setItem('txAwaiting', JSON.stringify(pr));
+
+        window.txCheckInt = setInterval(function () {
+          txAwaitingCheck(pr);
+        }, 1500);
+
+        var clipboard = new ClipboardJS('#txShortUrl', {
+          text: function (trigger) {
+            // return trigger.innerText;
+            return pr['_links'].shortUrl
+          }
+        });
+
+        clipboard.on('success', function (e) {
+          l('-- ', pr['uuid'], e)
+
+          // e.clearSelection();
+        });
+
+        $('#SEPAdigitalPRform').hide();
+        $('#SEPAdigitalPRcode').show();
+
+        /*const fm = new FormatMoney({
+            decimals: 2
+        });*/
+
+        $('#SEPAdigitalPRcode img').attr('src', pr['_links'].qrcode);
+        $('#SEPAdigitalPRcode h2').text('😷   ' + pr['name_to']);
+        $('#SEPAdigitalPRcode h1').text('💶   ' + parseFloat(pr['amount'], 10).toFixed(2).replace('.', ','));
+        $('#SEPAdigitalPRcode h3').text('💳   ' + pr['iban_to']);
+        $('#SEPAdigitalPRcode h4').text('🌐   https://SEPA.id/' + pr['shortId']);
+      } else {
+        l('**** ERROR on create payment request ***')
+      }
+    };
+
+    xhr.onerror = function () {
+      l('ERROR init EPC QR', error);
+      // v.loader = false;
+    };
+  }
+
+  function txAwaitingSend() {
+    // var icon = $('#btn-sepa-pay i'),
+    var currentTs = Math.floor(Date.now() / 1000),
+      email,
+      phone;
+
+    window.SEPAdigitalTxId = false;
+
+    // icon.removeClass().addClass('fas fa-circle-notch fa-spin'); /* fas fa-clock */
 
     if ($('#userId').length > 0 && $('#userId').val().trim().indexOf('@')) {
       email = $('#userId').val().trim();
@@ -174,9 +291,9 @@ $(document).ready(function ($) {
           console.log('-- tx success');
           clearInterval(txCheckInt);
 
-
-          var icon = $('#btn-sepa-instant-pay i');
-          icon.removeClass().addClass('far fa-check-circle');
+          if (icon.length > 0) {
+            icon.removeClass().addClass('far fa-check-circle');
+          }
 
           $('#sepa-qr-code').hide();
           $('#sepa-pay-success').show();
@@ -251,7 +368,8 @@ $(document).ready(function ($) {
   });
 
   window.prInitTx = function () {
-    txAwaitingSend()
+    // txAwaitingSend()
+    startAboInitRequest()
   };
   window.txSendAwaiting = txSendAwaiting;
 });
