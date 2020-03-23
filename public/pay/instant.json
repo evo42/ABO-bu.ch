@@ -1,0 +1,24 @@
+{
+  "dir": "ltr",
+  "lang": "en-us",
+  "name": "Digital Debit Card",
+  "short_name": "S€PA.digital",
+  "description": "EU Open Banking Instant Payments",
+  "scope": "/",
+  "display": "standalone",
+  "start_url": "./index.html",
+  "background_color": "#ffffff",
+  "theme_color": "#003399",
+  "orientation": "any",
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "icons": [{
+      "src": "./sepa.digital.png",
+      "sizes": "144x144",
+      "type": "image/png"
+  }],
+  "serviceworker": {
+      "src": "./instant.js",
+      "use_cache": false
+  }
+}
