@@ -1,0 +1,33 @@
+;;
+;; Domain:     a-bu.ch.
+;; Exported:   2020-03-23 01:03:32
+;;
+;; This file is intended for use for informational and archival
+;; purposes ONLY and MUST be edited before use on a production
+;; DNS server.  In particular, you must:
+;;   -- update the SOA record with the correct authoritative name server
+;;   -- update the SOA record with the contact e-mail address information
+;;   -- update the NS record(s) with the authoritative name servers for this domain.
+;;
+;; For further information, please consult the BIND documentation
+;; located on the following website:
+;;
+;; http://www.isc.org/
+;;
+;; And RFC 1035:
+;;
+;; http://www.ietf.org/rfc/rfc1035.txt
+;;
+;; Please note that we do NOT offer technical support for any use
+;; of this zone data, the BIND name server, or any other third-party
+;; DNS software.
+;;
+;; Use at your own risk.
+;; SOA Record
+a-bu.ch.	3600	IN	SOA	a-bu.ch. root.a-bu.ch. 2033659201 7200 3600 86400 3600
+
+;; A Records
+a-bu.ch.	1	IN	A	51.158.110.75
+
+;; CNAME Records
+www.a-bu.ch.	1	IN	CNAME	a-bu.ch.
