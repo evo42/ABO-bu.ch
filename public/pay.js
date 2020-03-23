@@ -111,31 +111,6 @@ $(document).ready(function ($) {
 
         $('#payment-section').show();
 
-        if (pr.eidas != '') {
-          // start payment request background process 
-          // curl https://api.sepa.digital/v1/credit-transfer/raiffeisen.at -d '{"toIban": "", "toName": "", "fromIban": "", "eidas": "", "amount": 0, "reference": "", "token": "", "uuid": ""}'
-          txInit = {
-            toIban: pr.iban_to,
-            toBic: pr.bic_to,
-            toName: pr.name_to,
-            eidas: pr.eidas,
-            amount: pr.amount,
-            reference: pr.reference,
-            uuid: pr.uuid
-          }
-
-          $.post('//api.sepa.digital/v1/credit-transfer/raiffeisen.at', JSON.stringify(txInit), function (txSend) {
-
-            if (txSend.status == 'success') {
-              $('#sepa-pay-awaiting').hide();
-              $('#sepa-pay-success').show();
-            } else {
-              // TODO reauth
-              // TODO error
-            }
-          });
-        }
-
         txSendAwaiting = pr;
         localStorage.setItem('txAwaiting', JSON.stringify(response));
         txCheckInt = setInterval(function () {
