@@ -1,106 +1,296 @@
-let payment_request_event = undefined;
-let payment_request_resolver = undefined;
+$(document).ready(function ($) {
+  var userSlug,
+    txInit,
+    userDisplayName,
+    userName,
+    userEmail,
+    txAmount = 0,
+    txCheckInt,
+    txCheckCount = 0,
+    txSendAwaiting,
+    txAwaiting = JSON.parse(localStorage.getItem('txAwaiting'));
 
-self.addEventListener('canmakepayment', function (e) {
-  e.respondWith(true);
-});
+  window.SEPAdigitalTxId = false;
 
-self.addEventListener('paymentrequest', function (e) {
-  // TODO
-  var txId = (e.methodData[0].supportedMethods[0].data && e.methodData[0].supportedMethods[0].data.txId) || '';
-  console.log('pr-init', e);
+  // check for awaiting tx
+  if (txAwaiting && txAwaiting.id != '') {
+    if (txCheckInt) {
+      clearInterval(txCheckInt);
+    }
+    txCheckInt = setInterval(function () {
+      txAwaitingCheck(txAwaiting);
+    }, 3 * 1000);
 
-  if (!txId || txId.length < 5) {
-    // txId = $('#txRef').val();
-  }
+    if (txAwaiting.status == 'payment_settled' || txAwaiting.status == 'payment_signed') {
+      console.log('-- tx success from localstorage');
+      clearInterval(txCheckInt);
 
-  var url = "https://SEPA.digital/pay#" + txId;
+      $('#payment-section').hide();
 
-  payment_request_event = e;
-  payment_request_resolver = new PromiseResolver();
+      localStorage.removeItem('txAwaiting');
+      localStorage.setItem('txLastPaid', JSON.stringify(txAwaiting));
+    } else if (txAwaiting.status == 'created') {
 
-  // e.methodData[0].supportedMethods[0]
+      $('#payment-section').show();
+      $('#sepa-qr-code').hide();
+      $('#sepa-pay-success').show();
 
-  e.respondWith(payment_request_resolver.promise);
-  e.openWindow(url)
-    .then(window_client => {
-      if (window_client == null)
-        payment_request_resolver.reject('Failed to open window');
-    })
-    .catch(function (err) {
-      payment_request_resolver.reject(err);
-    })
-});
+      $('#sepa-pay-success i').removeClass().addClass('fas fa-circle-notch fa-spin');
+      $('.hide-while-txAwaitReload').hide();
+      // $('.show-while-txAwaitReload').show();
 
-self.addEventListener('message', listener = function (e) {
-  if (e.data == "payment_app_window_ready") {
-    sendPaymentRequest();
-    return;
-  }
+      var icon = $('#btn-sepa-instant-pay i'),
+        currentTs = Math.floor(Date.now() / 1000);
 
-  if (e.data.methodName) {
-    payment_request_resolver.resolve(e.data);
+      icon.removeClass().addClass('fas fa-circle-notch fa-spin');
+    }
+
   } else {
-    payment_request_resolver.reject(e.data);
+    /*
+    txSendAwaiting = setTimeout(function() {
+        console.log('AUTO TRIGGER txAwaiting');
+        // if (!txSendAwaiting) {
+        txAwaitingSend();
+        // }
+    }, 20 * 1000);
+    */
   }
-});
 
-function sendPaymentRequest() {
-  // Note that the returned window_client from openWindow is not used since
-  // it might be changed by refreshing the opened page.
-  // Refer to https://www.w3.org/TR/service-workers-1/#clients-getall
-  let options = {
-    includeUncontrolled: false,
-    type: 'window'
-  };
-  clients.matchAll(options).then(function (clientList) {
-    for (var i = 0; i < clientList.length; i++) {
+  function txAwaitingSend() {
+    // var icon = $('#btn-sepa-pay i'),
+    var icon = $('#btn-sepa-instant-pay i'),
+      currentTs = Math.floor(Date.now() / 1000),
+      eidasId;
 
-      if (!payment_request_event) {
-        continue;
+    window.SEPAdigitalTxId = false;
+
+    icon.removeClass().addClass('fas fa-circle-notch fa-spin'); /* fas fa-clock */
+
+    if ($('#userEmail').val().trim() == 'rene.kapusta@eesti.ee') {
+      eidasId = 'rene.kapusta@eesti.ee';
+    }
+
+    txAwaiting = {
+      correlationId: ($('#receiverIban').val() + '.' + $('#txRef').val() + '.' + currentTs).replace(/\s+/g, '').trim(),
+      iban: $('#receiverIban').val().replace(/\s+/g, '').trim(),
+      bic: $('#receiverBic').val().trim(),
+      amount: parseFloat($('#txAmount').val().replace(',', '.').replace('€', '').trim(), 10),
+      name: $('#receiverName').val().trim(),
+      customerId: $('#userEmail').val().trim(),
+      eidas: eidasId || '',
+      // reference: $('#txRef').val().trim(),
+      // shortId: $('#txRef').val().trim(),
+      // ipn: "https://api.sepa.digital/v1/tx/inbox",
+      // tip: parseFloat(($('#txTip') && $('#txTip').val() && $('#txTip').val().replace(',', '.').replace('€', '').trim()) || 0, 10),
+      // ipn: "https://webhook.site/cf3f287f-ae8c-4ece-8ddd-6a519341ffcd"
+      // userPhone: $('#userPhone').val().trim(),
+    };
+
+    /* store before send and update after receiving data */
+    localStorage.setItem('txAwaiting', JSON.stringify(txAwaiting));
+    if (txCheckInt) {
+      clearInterval(txCheckInt);
+    }
+
+    $.post('//api.sepa.digital/credit-transfer', JSON.stringify(txAwaiting), function (response) {
+      // process response
+      console.log('response awaiting tx', response);
+      // clearInterval(txCheckInt);
+      var pr = response;
+
+      window.SEPAdigitalTxId = pr.uuid;
+
+      if (response && response['_links'] && response['_links'].payment) {
+        $('.cd-sepa-digital-code').attr('src', pr['_links'].qrcode);
+
+        $('#link-sepa-digital').attr('href', pr['_links'].payment)
+        $('#link-bankapp').attr('href', pr['_links'].bankapp)
+
+        $('#txRef').val(pr['shortId'])
+
+        $('#payment-section').show();
+
+        if (pr.eidas != '') {
+          // start payment request background process 
+          // curl https://api.sepa.digital/v1/credit-transfer/raiffeisen.at -d '{"toIban": "", "toName": "", "fromIban": "", "eidas": "", "amount": 0, "reference": "", "token": "", "uuid": ""}'
+          txInit = {
+            toIban: pr.iban_to,
+            toBic: pr.bic_to,
+            toName: pr.name_to,
+            eidas: pr.eidas,
+            amount: pr.amount,
+            reference: pr.reference,
+            uuid: pr.uuid
+          }
+
+          $.post('//api.sepa.digital/v1/credit-transfer/raiffeisen.at', JSON.stringify(txInit), function (txSend) {
+
+            if (txSend.status == 'success') {
+              $('#sepa-pay-awaiting').hide();
+              $('#sepa-pay-success').show();
+            } else {
+              // TODO reauth
+              // TODO error
+            }
+          });
+        }
+
+        txSendAwaiting = pr;
+        localStorage.setItem('txAwaiting', JSON.stringify(response));
+        txCheckInt = setInterval(function () {
+          txAwaitingCheck(txSendAwaiting);
+        }, 1500);
+      } else {
+        console.log('**** ERROR on create payment request ***')
       }
-      // Might do more communications or checks to make sure the message is
-      // posted to the correct window only.
 
-      // Copy the relevant data from the paymentrequestevent to
-      // send to the payment app confirmation page.
-      // Note that the entire PaymentRequestEvent can not be passed through
-      // postMessage directly since it can not be cloned.
-      clientList[i].postMessage({
-        total: payment_request_event.total,
-        methodData: payment_request_event.methodData,
-      });
+    })
+  }
+
+  // on blur check for eIDAS ID (email)
+  $('#userEmail').on('blur', function (e) {
+    var userEmail = $(this).val().trim();
+    var icon = $('#btn-sepa-instant-pay i');
+
+    icon.removeClass().addClass('fas fa-chevron-circle-right');
+    $('#btn-sepa-eu-pay').hide();
+    $('#btn-sepa-instant-pay').show();
+
+    $('#userName').attr('disabled', false);
+  });
+
+  $('#userName').on('keyup', function (e) {
+    userSlug = slugify($(this).val());
+    // console.log('username entered: ' + userSlug);
+
+    if (userSlug.length < 3) {
+      $('#userEmail').val('');
+      $('#eSEPA').text('');
     }
   });
+
+  function txAwaitingCheck(tx) {
+    // return;
+
+    console.log('### txAwaitingCheck', tx);
+
+
+    if (txCheckCount > 250) {
+      clearInterval(txCheckInt);
+      return;
+    }
+
+    if (!tx.uuid) {
+      clearInterval(txCheckInt);
+      localStorage.removeItem('txAwaiting');
+      return;
+    }
+
+    // tx.uuid
+    // var res = $.getJSON('//api.sepa.digital/v1/tx/' + tx.id + '?callback=?', function(d, s, xhr) {
+    var res = $.getJSON('//api.sepa.digital/v1/tx/' + tx.uuid, function (d, s, xhr) {
+      console.log('- tx check', txCheckCount, s, d);
+      txCheckCount++;
+
+      if (s == 'success') {
+
+        if (d.status == 'payment_settled' || d.status == 'payment_signed') {
+          console.log('-- tx success');
+          clearInterval(txCheckInt);
+
+
+          var icon = $('#btn-sepa-instant-pay i');
+          icon.removeClass().addClass('far fa-check-circle');
+
+          $('#sepa-qr-code').hide();
+          $('#sepa-pay-success').show();
+          $('#sepa-pay-awaiting').hide();
+
+          $('#sepa-pay-success i').removeClass().addClass('far fa-check-circle');
+
+          localStorage.removeItem('txAwaiting');
+          localStorage.setItem('txLastPaid', JSON.stringify(txAwaiting));
+
+          /* fas fa-check-circle */
+          /*
+          var icon = $('#btn-sepa-pay i');
+          icon.removeClass().addClass('far fa-check-circle'); 
+
+          initModal('modal-trigger'); // PAYMENT SUCCESS
+          */
+        } else if (d.status == 'created') {
+          // todo
+        } else {
+
+          // localStorage.removeItem('txAwaiting');
+          // localStorage.setItem('txLastPaid', JSON.stringify(txAwaiting));    
+        }
+
+        // alert('Payment successful');
+      } else {
+        console.log('tx check error');
+        // clearInterval(txCheckInt);
+        // localStorage.removeItem('txAwaiting');
+      }
+    }).fail(function () {
+      console.log('tx check error');
+      clearInterval(txCheckInt);
+      localStorage.removeItem('txAwaiting');
+    });
+
+    /*console.log(res.type);
+    if (res) {
+        console.log('api ok');
+    } else {
+        console.log('api error');
+    }*/
+  }
+
+
+  $('.btn-tx').on('focus', function () {
+    var that = this;
+    var clipboard = new ClipboardJS('#' + $(this).attr('id'), {
+      text: function (trigger) {
+        return $(trigger).val().replace('€ ', '');
+      }
+    });
+
+    clipboard.on('success', function (e) {
+      var tt = tippy('#' + $(that).attr('id'), {
+        content: '✓ &nbsp;"' + e.text + '" copied.'
+      });
+
+      setTimeout(() => {
+        const button = document.querySelector('#' + $(that).attr('id'))
+        const instance = button._tippy
+        instance.show();
+
+        setTimeout(() => {
+          instance.destroy(true);
+        }, 2000);
+      })
+
+      e.clearSelection();
+    });
+  });
+
+  window.prInitTx = function () {
+    txAwaitingSend()
+  };
+  window.txSendAwaiting = txSendAwaiting;
+});
+
+function slugify(string) {
+  const a = 'àáäâãåèéëêìíïîòóöôùúüûñçßÿœæŕśńṕẃǵǹḿǘẍźḧ·/_,:;'
+  const b = 'aaaaaaeeeeiiiioooouuuuncsyoarsnpwgnmuxzh------'
+  const p = new RegExp(a.split('').join('|'), 'g')
+
+  return string.toString().toLowerCase()
+    .replace(/\s+/g, '-') // Replace spaces with -
+    .replace(p, c => b.charAt(a.indexOf(c))) // Replace special characters
+    .replace(/&/g, '-and-') // Replace & with 'and'
+    .replace(/[^\w\-]+/g, '') // Remove all non-word characters
+    .replace(/\-\-+/g, '-') // Replace multiple - with single -
+    .replace(/^-+/, '') // Trim - from start of text
+    .replace(/-+$/, '') // Trim - from end of text
 }
-
-function PromiseResolver() {
-  /** @private {function(T=): void} */
-  this.resolve_;
-
-  /** @private {function(*=): void} */
-  this.reject_;
-
-  /** @private {!Promise<T>} */
-  this.promise_ = new Promise(function (resolve, reject) {
-    this.resolve_ = resolve;
-    this.reject_ = reject;
-  }.bind(this));
-}
-
-PromiseResolver.prototype = {
-  /** @return {!Promise<T>} */
-  get promise() {
-    return this.promise_;
-  },
-
-  /** @return {function(T=): void} */
-  get resolve() {
-    return this.resolve_;
-  },
-
-  /** @return {function(*=): void} */
-  get reject() {
-    return this.reject_;
-  },
-};

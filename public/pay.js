@@ -3,7 +3,7 @@ $(document).ready(function ($) {
     txInit,
     userDisplayName,
     userName,
-    userEmail,
+    userId,
     txAmount = 0,
     txCheckInt,
     txCheckCount = 0,
@@ -60,14 +60,17 @@ $(document).ready(function ($) {
     // var icon = $('#btn-sepa-pay i'),
     var icon = $('#btn-sepa-instant-pay i'),
       currentTs = Math.floor(Date.now() / 1000),
-      eidasId;
+      email,
+      phone;
 
     window.SEPAdigitalTxId = false;
 
     icon.removeClass().addClass('fas fa-circle-notch fa-spin'); /* fas fa-clock */
 
-    if ($('#userEmail').val().trim() == 'rene.kapusta@eesti.ee') {
-      eidasId = 'rene.kapusta@eesti.ee';
+    if ($('#userId').length > 0 && $('#userId').val().trim().indexOf('@')) {
+      email = $('#userId').val().trim();
+    } else if ($('#userId').length > 0 && $('#userId').val().trim().indexOf('+')) {
+      phone = $('#userId').val().trim();
     }
 
     txAwaiting = {
@@ -76,14 +79,12 @@ $(document).ready(function ($) {
       bic: $('#receiverBic').val().trim(),
       amount: parseFloat($('#txAmount').val().replace(',', '.').replace('€', '').trim(), 10),
       name: $('#receiverName').val().trim(),
-      customerId: $('#userEmail').val().trim(),
-      eidas: eidasId || '',
+      customerId: $('#userId').val().trim(),
+      userPhone: phone,
+      userEmail: email,
       // reference: $('#txRef').val().trim(),
       // shortId: $('#txRef').val().trim(),
       // ipn: "https://api.sepa.digital/v1/tx/inbox",
-      // tip: parseFloat(($('#txTip') && $('#txTip').val() && $('#txTip').val().replace(',', '.').replace('€', '').trim()) || 0, 10),
-      // ipn: "https://webhook.site/cf3f287f-ae8c-4ece-8ddd-6a519341ffcd"
-      // userPhone: $('#userPhone').val().trim(),
     };
 
     /* store before send and update after receiving data */
@@ -148,8 +149,8 @@ $(document).ready(function ($) {
   }
 
   // on blur check for eIDAS ID (email)
-  $('#userEmail').on('blur', function (e) {
-    var userEmail = $(this).val().trim();
+  $('#userId').on('blur', function (e) {
+    var userId = $(this).val().trim();
     var icon = $('#btn-sepa-instant-pay i');
 
     icon.removeClass().addClass('fas fa-chevron-circle-right');
@@ -164,7 +165,7 @@ $(document).ready(function ($) {
     // console.log('username entered: ' + userSlug);
 
     if (userSlug.length < 3) {
-      $('#userEmail').val('');
+      $('#userId').val('');
       $('#eSEPA').text('');
     }
   });
