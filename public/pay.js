@@ -14,6 +14,7 @@ $(document).ready(function ($) {
     timeoutID2,
     sd,
     txCheckCount = 0,
+    that,
     txAwaiting = JSON.parse(localStorage.getItem('txAwaiting'));
 
   window.SEPAdigitalTxId = false;
