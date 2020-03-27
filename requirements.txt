@@ -8,6 +8,8 @@ lxml
 psycopg2
 environs
 requests
+slugify
+
 # websockets == 7.*
 # sanic-envconfig
 # BeautifulSoup4

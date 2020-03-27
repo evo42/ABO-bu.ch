@@ -1,0 +1,137 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>📱 $title</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+    <!-- 🖍️ https://bulma.io/documentation -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css">
+    <!-- 🖼️ https://fontawesome.com/icons -->
+
+    <style type="text/css">
+        @media print {
+
+            .hide,
+            .hide-print {
+                display: none;
+            }
+        }
+
+        .hide {
+            display: none;
+        }
+
+        q {
+            quotes: none;
+            __font-style: italic;
+            /* quotes: "« " " »" "‹" "›"; */
+        }
+
+        q u {
+            text-decoration: underline;
+        }
+
+        .aboTypes label {
+            width: 150px;
+            font-size: small;
+        }
+
+        .aboTypes label.radio-smaller {
+            width: 120px;
+        }
+
+        .aboTypes input {
+            margin-right: 5px;
+        }
+
+        .bgGif {
+            background: url("assets/giphy-VcizxCUIgaKpa-tumblr-fadingchildhood.webp") no-repeat;
+            max-width: 480px;
+            max-height: 360px;
+        }
+
+        section,
+        footer {
+            text-align: center;
+        }
+    </style>
+
+    <link rel="shortcut icon" href="./favicon.ico">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta charset="utf-8" />
+</head>
+
+<body>
+    <div>
+        <section id="intro has-text-centered container is-fluid">
+
+            <section id="SEPAdigitalShop">
+                <nav class="level">
+                    <!-- Left side -->
+                    <div class="level-left">
+                        <div class="level-item">
+                            <div id="address" class="has-text-left" style="margin: 0 0 0 123px; min-height: 75px;">
+                                <span property="name"></span>
+                                <div class="address" property="address" typeof="PostalAddress">
+                                    <span property="streetAddress">$address</span><br>
+                                    <span property="postalCode">$postalcode</span>
+                                    <span property="addressLocality">&nbsp;</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right side -->
+                    <div class="level-right" style="margin-right: 42px;">
+                        <p class="level-item" id="aboType">BUCH Abo:&nbsp;<strong>nicht gewählt</strong></p>
+                        <p class="level-item" id="todayDate">Datum:&nbsp;<span></span></p>
+                    </div>
+                </nav>
+                
+
+                <h1 class="title is-2" style="padding: 21px 42px 0 42px; margin: 42px 42px 21px 42px;">
+                    « 📚 <q cite="https://wikiquote.org/wiki/Young_Wizards#So_You_Want_to_Be_a_Wizard"
+                        __breaks_print-css_style="font-style: italic;">
+                        Reading <u>one</u> book is like eating <u>one</u> potato chip.</q> »
+                </h1>
+
+                <h2 class="title is-3 has-text-success" style="margin: 42px auto 0px auto;">
+                    $titel
+                </h2>
+            </section>
+
+        </section>
+    </div>
+
+    <footer class="footer hide-print">
+        <div class="content has-text-centered"></div>
+        <small>
+            ©️ <a href="https://A-bu.ch" target="_blank">A-Bu.ch</a><br />
+            📞 <a href="tel:+43274244303">+43 2742 44 303</a> &nbsp;&nbsp; 📧 &nbsp; <a
+                href="mailto:inbox@A-bu.ch">inbox@A-Bu.ch</a>
+        </small>
+        </div>
+    </footer>
+
+    <!--  ✱ ✱ ✱  Add the S€PA.digital Payment Request API  ✱ ✱ ✱  -->
+
+    <!-- add some $('cash') -- used for dom manipulation like jQuery & Co -->
+    <script src="https://cdn.jsdelivr.net/npm/cash-dom@6.0.2/dist/cash.min.js"></script>
+
+    <!-- W3C Payment Request API for {Instant} SEPA Credit Transfer via SEPA.digital -->
+    <script src="/pay/w3c-pr-api.js?032308"></script>
+    <script src="/pay/A-bu.ch.js?032308"></script>
+    <script src="/pay.js?032308"></script>
+    <!-- script src="/pay/merchant.js?032308"></script -->
+
+    <script src="https://cdn.jsdelivr.net/npm/iban@0.0.14/iban.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsonld@3.0.1/dist/jsonld.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/localforage@1.7.3/dist/localforage.min.js"></script>
+    <!--  ✱ ✱ ✱  ✔️ S€PA.digital Pay is now ready #ZeroFees ✱ ✱ ✱  -->
+
+</body>
+
+</html>
