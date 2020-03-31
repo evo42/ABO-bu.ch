@@ -2,212 +2,632 @@
 <html>
 
 <head>
-	<title>BUCH Abo ✱ A-bu.ch ✱ Weil Wissen es weiter brint.</title>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css">
-	<link rel="stylesheet" href="assets/css/main.css" />
-	<noscript>
-		<link rel="stylesheet" href="assets/css/noscript.css" />
-	</noscript>
+    <title>📱 Instant SEPA Credit Transfer ⚡ S€PA.digital 🇪🇺 #SEPAdigital #InstantPayment #SCTInst</title>
+    <!--
+		✱ Cashless
+		✱ Cardless
+		✱ Contactless
+
+		📱 SEPA Instant #CloudPOS  ⚡  Priceless  🍸
+
+		#InstantPayments with #ZeroFees
+		#SEPAdigital #CloudPOS #SCTInst
+
+
+		🔥  Enable S€PA.digital/pay N O W  💳
+
+
+		✱ ✱ ✱  Accept SEPA credit transfers to any EUR IBAN account with #SEPAdigital instantly in real time!
+		  — —  No on-boarding required  —  KYC / AML was already done by your account provider. Just Join us.
+
+		✱ ✱ ✱  Account 2 Account  —  payment by payment  —  JOIN  the r€VOlution of #InstantPayments  N O W ❗
+		  — —  No card companies required  —  SEPA.digital settlement assured:  24/7  in less than  3 SECONDS.
+
+		✱ ✱ ✱  Add the following SEPA.digital Payment Request Manifest to your HTML page or mobile app. DONE ✔️
+		  — —  No setup required  —  NOW you can accept SEPA credit transfers via EPC QR Codes with #ZeroFees                                                                       -->
+
+
+    <!-- 🔻🔻 Add the following HTML code to the website / app where you want to receive #SEPA #InstantPayments                                                                     -->
+    <link rel="manifest" href="/pay/instant.json?032308">
+
+
+    <!-- 🔻🔻 Accept payments instantly for the following organisation directly to their SEPA €UR bank account.
+        ✱ ✱ ✱  24/7 < 3 seconds real-time settlement. Up to € 150.000,- per transaction | 1-bank day: no limit.
+        ✱ ✱ ✱  PDF: #EUcommerce banks & PSPs @ European Payments Council http://bit.ly/SCTInst-participants-pdf
+        ✱ ✱ ✱  SaaS: PAN-EUropean decentralised Account2Account instant settlement Public Leder payment network.                                                                    -->
+    <script id="SEPAdigital" data-type="application/ld+json">
+        window.SEPAdigital.to = {
+            "@context": "https://schema.org",
+            "@type": "BankAccount",
+            "iban": "NL28BUNQ2042616540",
+            "bic": "GIBAATWWXXX",
+            "currency": "EUR",
+            "recipient": {
+                "@type": "Person",
+                "givenName": "René",
+                "familyName": "Kapusta",
+                "alternateName": "A-bu.ch Online",
+                "url": "https://A-bu.ch",
+                "email": "A-bu.ch@K42.ventures",
+                "telephone": "+43 2742 44303",
+                "mainEntityOfPage": "https://twitter.com/rene_kapusta",
+                "image": "https://pbs.twimg.com/profile_images/854919519/rene_400x400.jpg"
+            },
+            "bankAccountType": "https://IBAN.SEPA.digital#EUR-SCTInst",
+            "areaServed": "https://wikidata.org/wiki/Q1307754",
+            "logo": "https://usercontent.everflowclient.io/513/assets/logo/LogoBunqSmallPadding500px.png",
+            "provider": {
+                "@type": "Organization",
+                "legalName": "bunq B.V.",
+                "alternateName": "bunq",
+                "name": "bunq, Bank of The Free",
+                "url": "https://bunq.eu",
+                "logo": "https://bunq.com/assets/dist/images/bunq-black.svg",
+                "description": "bunq is a Dutch, internationally active neobank, headquartered in Amsterdam, Netherlands. The company was founded in 2015 by Ali Niknam. bunq offers personal, business & joint bank accounts and focuses on ease of use transaction accounts. They also offer cards that can be used alongside other bank accounts: the Travel Card & Green Card.",
+                "slogan": "Bank of The Free",
+                "address": {
+                    "@type": "PostalAddress",
+                    "addressCountry": "NL",
+                    "addressLocality": "Amsterdam",
+                    "postalCode": "1043BS",
+                    "streetAddress": "Naritaweg 131-133"
+                },
+                "knowsLanguage": "de, en, nl, it, es, fr, pt",
+                "image": "https://duckduckgo.com/i/d0fb009f.png",
+                "telephone": "",
+                "vatID": "",
+                "globalLocationNumber": "",
+            },
+            "cashBack": 0,
+            "contactlessPayment": true
+        }
+    </script>
+
+    <!-- 🍹 At the bottom of the page, add the following two lines with W3C PR code to initialize S€PA.digital 
+        
+
+		<script src="https://SEPA.digital/pay/w3c-pr-api.js"></script>
+		<script src="https://SEPA.digital/pay/w3c-pr-api.merchant.js"></script>
+
+
+        🌐 W3C Payment Request API specification: https://w3.org/TR/payment-request
+
+		✱ ✱ ✱     ¯\_(ツ)_/¯    ✱ ✱ ✱    [(€)]    ✱ ✱ ✱    (^_^)  ✱✱  [o_o]  ✱✱✱  (".")  ✱✱  ($.$)    ✱ ✱ ✱
+
+        🤖 ```
+                curl https://api.sepa.digital/payment-request 
+                    -sd '{
+                            "iban": "NL28BUNQ2042616540",
+                            "name": "Buch ABO Jahreskarte",
+                            "amount": 42,
+                            "reason": "[(€)] Buch Abo 12 Monate <3 www.A-bu.ch",
+                        }'
+        ```
+
+        ✱ ✱ ✱  API documentation @ Github: https://github.com/SEPAdigital/API-docs
+        ✱ ✱ ✱  Adv configuration @ https://domain.tld/.well-known/SEPA.digital.json
+
+
+        🐙 € `curl https://api.sepa.digital/inbox -d '{"reply": "meh@lifeless.library.eu", "msg": "Aloha 📚"}'`                                                                     -->
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/paper-css@0.4.1/paper.min.css">
+    <!-- 🖨️ https://github.com/cognitom/paper-css#basic-usage -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+    <!-- 🖍️ https://bulma.io/documentation -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css">
+    <!-- 🖼️ https://fontawesome.com/icons -->
+
+    <style type="text/css">
+        @media print {
+
+            .hide,
+            .hide-print {
+                display: none;
+            }
+        }
+
+        .hide {
+            display: none;
+        }
+
+        q {
+            quotes: none;
+            __font-style: italic;
+            /* quotes: "« " " »" "‹" "›"; */
+        }
+
+        q u {
+            text-decoration: underline;
+        }
+
+        .aboTypes label {
+            width: 150px;
+            font-size: small;
+        }
+
+        .aboTypes label.radio-smaller {
+            width: 120px;
+        }
+
+        .aboTypes input {
+            margin-right: 5px;
+        }
+
+        .bgGif {
+            background: url("assets/giphy-VcizxCUIgaKpa-tumblr-fadingchildhood.webp") no-repeat;
+            max-width: 480px;
+            max-height: 360px;
+        }
+
+        section,
+        footer {
+            text-align: center;
+        }
+    </style>
+
+    <link rel="shortcut icon" href="./favicon.ico">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta charset="utf-8" />
 </head>
 
-<body class="is-preload">
+<body class="A4">
+    <div class="sheet _padding-25mm">
+        <section id="intro has-text-centered container is-fluid">
 
-	<!-- Page Wrapper -->
-	<div id="page-wrapper">
+            <section id="SEPAdigitalShop">
+                <figure class="image is-3by1">
 
-		<!-- Header -->
-		<header id="header" class="alt">
-			<h1><a href="index.html">BUCH Abo ✱ A-bu.ch</a></h1>
-			<nav>
-				<a href="#menu">Menu</a>
-			</nav>
-		</header>
+                    <img src="./assets/robert-anasch-McX3XuJRsUM-unsplash.header.jpg"
+                        title="assorted-color filling book lot 📸 by Robert Anasch @ Unsplash" />
+                    <!--
+                    <img src="./assets/asterisk-q_gjDWf9ths-unsplash.jpg"
+                        title="open wide book 📸 ASTERISK @ Unsplash" />
+                    -->
+                </figure>
 
-		<!-- Menu -->
-		<nav id="menu">
-			<div class="inner">
-				<h2>Menu</h2>
-				<ul class="links">
-					<li><a href="index.html">Home</a></li>
-					<li><a href="generic.html">Generic</a></li>
-					<li><a href="elements.html">Elements</a></li>
-					<li><a href="#">Log In</a></li>
-					<li><a href="#">Sign Up</a></li>
-				</ul>
-				<a href="#" class="close">Close</a>
-			</div>
-		</nav>
+                <nav class="level">
+                    <!-- Left side -->
+                    <div class="level-left">
+                        <div class="level-item">
+                            <div id="address" class="has-text-left" style="margin: 0 0 0 123px; min-height: 75px;">
+                                <span property="name"></span>
+                                <div class="address" property="address" typeof="PostalAddress">
+                                    <span property="streetAddress">&nbsp;</span><br>
+                                    <span property="postalCode">&nbsp;</span>
+                                    <span property="addressLocality">&nbsp;</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-		<!-- Banner -->
-		<section id="banner">
-			<div class="inner">
-				<div class="logo"><img style="max-width:90px;" src="assets/book-reader-solid.svg"/></div>
-				<h2 style="text-transform: none;">BUCH Abo ✱ A-bu.ch</h2>
-				<h3>
-					« 📚 <q cite="https://wikiquote.org/wiki/Young_Wizards#So_You_Want_to_Be_a_Wizard"
-						__breaks_print-css_style="font-style: italic;">
-						Reading <u>one</u> book is like eating <u>one</u> potato chip.</q> »
-				</h3>
-				<small class="has-text-grey-light"> — <a class="has-text-grey-light"
-						href="https://wikiquote.org/wiki/Young_Wizards#So_You_Want_to_Be_a_Wizard" target="_blank">
-						Diane Duane @ «Young Wizards»</a>
-				</small>
+                    <!-- Right side -->
+                    <div class="level-right" style="margin-right: 42px;">
+                        <p class="level-item" id="aboType">BUCH Abo:&nbsp;<strong>nicht gewählt</strong></p>
+                        <p class="level-item" id="todayDate">Datum:&nbsp;<span></span></p>
+                    </div>
+                </nav>
+                
 
-			</div>
-		</section>
+                <h1 class="title is-2" style="padding: 21px 42px 0 42px; margin: 42px 42px 21px 42px;">
+                    « 📚 <q cite="https://wikiquote.org/wiki/Young_Wizards#So_You_Want_to_Be_a_Wizard"
+                        __breaks_print-css_style="font-style: italic;">
+                        Reading <u>one</u> book is like eating <u>one</u> potato chip.</q> »
+                </h1>
 
-		<!-- Wrapper -->
-		<section id="wrapper">
+                <small class="has-text-grey-light"> — <a class="has-text-grey-light"
+                        href="https://wikiquote.org/wiki/Young_Wizards#So_You_Want_to_Be_a_Wizard" target="_blank">
+                        Diane Duane @ «Young Wizards»</a>
+                </small>
 
-			<!-- One -->
-			<section id="one" class="wrapper spotlight style1">
-				<div class="inner">
-					<a href="#" class="image"><img src="images/pic01.jpg" alt="" /></a>
-					<div class="content">
-						<h2 class="major">Magna arcu feugiat</h2>
-						<p>Lorem ipsum dolor sit amet, etiam lorem adipiscing elit. Cras turpis ante, nullam sit amet
-							turpis non, sollicitudin posuere urna. Mauris id tellus arcu. Nunc vehicula id nulla
-							dignissim dapibus. Nullam ultrices, neque et faucibus viverra, ex nulla cursus.</p>
-						<a href="#" class="special">Learn more</a>
-					</div>
-				</div>
-			</section>
+                <h2 class="title is-3 has-text-success" style="margin: 12px auto 0px auto;">
+                    BUCH Abo Jahreskarte 2020/21
+                </h2>
+                <h3>Öffentliche Bücherei der Marktgemeinde Kirchstetten, NÖ</h3>
+                <h4 class="title is-4 has-text-link" style="margin: 4.2px auto 0px auto;">
+                    <small class="is-size-5">⏰ Jetzt gratis nutzen: digitales Angebot <br />der Büchereien Wien 🦠 #StayHome 🏡</small>
+                </h4>
+            </section>
 
-			<!-- Two -->
-			<section id="two" class="wrapper alt spotlight style2">
-				<div class="inner">
-					<a href="#" class="image"><img src="images/pic02.jpg" alt="" /></a>
-					<div class="content">
-						<h2 class="major">Tempus adipiscing</h2>
-						<p>Lorem ipsum dolor sit amet, etiam lorem adipiscing elit. Cras turpis ante, nullam sit amet
-							turpis non, sollicitudin posuere urna. Mauris id tellus arcu. Nunc vehicula id nulla
-							dignissim dapibus. Nullam ultrices, neque et faucibus viverra, ex nulla cursus.</p>
-						<a href="#" class="special">Learn more</a>
-					</div>
-				</div>
-			</section>
 
-			<!-- Three -->
-			<section id="three" class="wrapper spotlight style3">
-				<div class="inner">
-					<a href="#" class="image"><img src="images/pic03.jpg" alt="" /></a>
-					<div class="content">
-						<h2 class="major">Nullam dignissim</h2>
-						<p>Lorem ipsum dolor sit amet, etiam lorem adipiscing elit. Cras turpis ante, nullam sit amet
-							turpis non, sollicitudin posuere urna. Mauris id tellus arcu. Nunc vehicula id nulla
-							dignissim dapibus. Nullam ultrices, neque et faucibus viverra, ex nulla cursus.</p>
-						<a href="#" class="special">Learn more</a>
-					</div>
-				</div>
-			</section>
+            <section id="SEPAdigitalPRshop" style="display: inline-block; margin-top: 30px;">
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Mitglied</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <p class="control is-expanded has-icons-left">
+                                <input class="input" type="text" id="memberName" placeholder="Name">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-user"></i>
+                                </span>
+                            </p>
+                            <p class="help" style="text-align: left;">Name / Familienname</p>
+                        </div>
 
-			<!-- Four -->
-			<section id="four" class="wrapper alt style1">
-				<div class="inner">
-					<h2 class="major">Vitae phasellus</h2>
-					<p>Cras mattis ante fermentum, malesuada neque vitae, eleifend erat. Phasellus non pulvinar erat.
-						Fusce tincidunt, nisl eget mattis egestas, purus ipsum consequat orci, sit amet lobortis lorem
-						lacus in tellus. Sed ac elementum arcu. Quisque placerat auctor laoreet.</p>
-					<section class="features">
-						<article>
-							<a href="#" class="image"><img src="images/pic04.jpg" alt="" /></a>
-							<h3 class="major">Sed feugiat lorem</h3>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing vehicula id nulla dignissim dapibus
-								ultrices.</p>
-							<a href="#" class="special">Learn more</a>
-						</article>
-						<article>
-							<a href="#" class="image"><img src="images/pic05.jpg" alt="" /></a>
-							<h3 class="major">Nisl placerat</h3>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing vehicula id nulla dignissim dapibus
-								ultrices.</p>
-							<a href="#" class="special">Learn more</a>
-						</article>
-						<article>
-							<a href="#" class="image"><img src="images/pic06.jpg" alt="" /></a>
-							<h3 class="major">Ante fermentum</h3>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing vehicula id nulla dignissim dapibus
-								ultrices.</p>
-							<a href="#" class="special">Learn more</a>
-						</article>
-						<article>
-							<a href="#" class="image"><img src="images/pic07.jpg" alt="" /></a>
-							<h3 class="major">Fusce consequat</h3>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing vehicula id nulla dignissim dapibus
-								ultrices.</p>
-							<a href="#" class="special">Learn more</a>
-						</article>
-					</section>
-					<ul class="actions">
-						<li><a href="#" class="button">Browse All</a></li>
-					</ul>
-				</div>
-			</section>
+                        <div class="field">
+                            <div class="field-body">
+                                <div class="field is-expanded">
+                                    <div class="field has-addons">
+                                        <p class="control">
+                                            <a class="button is-static">
+                                                🇦🇹
+                                            </a>
+                                        </p>
+                                        <p class="control is-expanded">
+                                            <input class="input" id="phone" type="tel" placeholder="Telefonnummer">
+                                        </p>
+                                    </div>
+                                    <p class="help" style="text-align: left;">Format: 0664 0815123</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-		</section>
+                <div class="field is-horizontal">
+                    <div class="field-label"></div>
+                    <div class="field-body">
+                        <div class="field is-expanded">
+                            <div class="field has-addons">
+                                <p class="control is-expanded has-icons-left has-icons-right">
+                                    <input class="input" id="email" type="email" placeholder="E-Mail">
+                                    <span class="icon is-small is-left">
+                                        <i class="fas fa-envelope"></i>
+                                    </span>
+                                    <span class="icon is-small is-right hide">
+                                        <i class="fas fa-check"></i>
+                                    </span>
+                                </p>
+                            </div>
+                            <p class="help" style="text-align: left;">Deine E-Mail Adresse und / oder Telefonnummer zur
+                                Kontaktaufnahme.</p>
+                        </div>
+                    </div>
+                </div>
 
-		<!-- Footer -->
-		<section id="footer">
-			<div class="inner">
-				<h2 class="major">Get in touch</h2>
-				<p>Cras mattis ante fermentum, malesuada neque vitae, eleifend erat. Phasellus non pulvinar erat. Fusce
-					tincidunt, nisl eget mattis egestas, purus ipsum consequat orci, sit amet lobortis lorem lacus in
-					tellus. Sed ac elementum arcu. Quisque placerat auctor laoreet.</p>
-				<form method="post" action="#">
-					<div class="fields">
-						<div class="field">
-							<label for="name">Name</label>
-							<input type="text" name="name" id="name" />
-						</div>
-						<div class="field">
-							<label for="email">Email</label>
-							<input type="email" name="email" id="email" />
-						</div>
-						<div class="field">
-							<label for="message">Message</label>
-							<textarea name="message" id="message" rows="4"></textarea>
-						</div>
-					</div>
-					<ul class="actions">
-						<li><input type="submit" value="Send Message" /></li>
-					</ul>
-				</form>
-				<ul class="contact">
-					<li class="icon solid fa-home">
-						Untitled Inc<br />
-						1234 Somewhere Road Suite #2894<br />
-						Nashville, TN 00000-0000
-					</li>
-					<li class="icon solid fa-phone">(000) 000-0000</li>
-					<li class="icon solid fa-envelope"><a href="#">information@untitled.tld</a></li>
-					<li class="icon brands fa-twitter"><a href="#">twitter.com/untitled-tld</a></li>
-					<li class="icon brands fa-facebook-f"><a href="#">facebook.com/untitled-tld</a></li>
-					<li class="icon brands fa-instagram"><a href="#">instagram.com/untitled-tld</a></li>
-				</ul>
-				<ul class="copyright">
-					<li>&copy; Untitled Inc. All rights reserved.</li>
-					<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-				</ul>
-			</div>
-		</section>
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Adresse</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <p class="control is-expanded has-icons-left">
+                                <input class="input is-small" type="text" id="streetAddress" placeholder="Anschrift">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </span>
+                            </p>
+                            <p class="help" style="text-align: left;">Straße und Haus- / Türnummer.</p>
+                        </div>
 
-	</div>
+                        <div class="field">
+                            <div class="field-body">
+                                <div class="field is-expanded">
+                                    <div class="field has-addons">
+                                        <p class="control">
+                                            <a class="button is-static is-small">
+                                                🇦🇹
+                                            </a>
+                                        </p>
+                                        <p class="control is-expanded">
+                                            <input id="postalCode" size="10" class="input is-small" type="number"
+                                                placeholder="PLZ">
+                                        </p>
+                                    </div>
+                                    <p class="help" style="text-align: left;">Postleitzahl aus Österreich.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-	<!-- Scripts -->
-	<script src="assets/js/jquery.min.js"></script>
-	<script src="assets/js/jquery.scrollex.min.js"></script>
-	<script src="assets/js/browser.min.js"></script>
-	<script src="assets/js/breakpoints.min.js"></script>
-	<script src="assets/js/util.js"></script>
-	<script src="assets/js/main.js"></script>
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Auswahl</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field is-narrow">
+                            <div class="control aboTypes">
+                                <label class="radio radio-smaller">
+                                    <input id="AboK" class="radioAmount" value="Kind" data-amount="1" type="radio"
+                                        name="aboType">
+                                    Kinder < 19 € 1,- </label> <label class="radio">
+                                        <input id="AboF" class="radioAmount" value="Familie" data-amount="42"
+                                            type="radio" name="aboType">
+                                        Familie (1 EW+) € 42,-
+                                </label>
+                                <label class="radio radio-smaller">
+                                    <input id="Spende" class="radioAmount" value="Spende" data-amount="123" type="radio"
+                                        name="aboType">
+                                    Spende € 123,-
+                                </label>
+                                <br />
+                                <label class="radio radio-smaller">
+                                    <input id="AboE" class="radioAmount" value="Erwachsener" data-amount="52"
+                                        type="radio" name="aboType">
+                                    19+ Jahre € 52,-
+                                </label>
+                                <label class="radio">
+                                    <input id="AboO" class="radioAmount" value="Organisation" data-amount="365"
+                                        type="radio" name="aboType">
+                                    Organisation € 365,-
+                                </label>
+                                <label class="radio radio-smaller">
+                                    <input id="Sponsor" class="radioAmount" value="Sponsor" data-amount="520"
+                                        type="radio" name="aboType">
+                                    Sponsor € 520,-
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Auswahl</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field is-narrow">
+                            <div class="control">
+                                <div class="select is-fullwidth">
+                                    <select id="aBuchAboType">
+                                        <option value="" data-amount="0">Abo-Art wählen</option>
+                                        <option value="Kind" data-amount="1">unter 19 Jahren</option>
+                                        <option value="Erwachsener" data-amount="52">19 Jahre und älter</option>
+                                        <option value="Familie" data-amount="42">Familie (1E+)</option>
+                                        <option value="Organisation" data-amount="365">Organisation</option>
+                                        <option value="Spende" data-amount="123">Freie Spende</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+-->
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Betrag</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <p class="control has-icons-left">
+                                <input id="amount" class="input is-static" type="text" value="" readonly>
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-euro-sign"></i>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+
+            <section id="SEPAdigitalPRcheckout" style="display: none; margin-top: 30px;">
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <p class="control is-expanded has-icons-left">
+                                <input class="input is-small is-narrow" style="max-width: 250px" type="url" id="shortUrl" placeholder="SEPA.id URI">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-receipt"></i>
+                                </span>
+                            </p>
+                            <p class="help" style="text-align: left;">SEPA.id der Transaktion.</p>
+                        </div>
+
+                        <div class="field">
+                            <div class="field-body">
+                                <div class="field is-expanded">
+                                    <div class="field has-addons">
+                                        <p class="control">
+                                            <a class="button is-static is-small">
+                                                🇦🇹
+                                            </a>
+                                        </p>
+                                        <p class="control is-expanded">
+                                            <input class="input is-small is-narrow" style="max-width: 142px" id="phonePass" type="tel" placeholder="Telefonnummer">
+                                        </p>
+                                    </div>
+                                    <p class="help" style="text-align: left;"><i class="fab fa-apple"></i> Wallet / <i class="fab fa-google"></i> Pay <a href="#">Pass zusenden</a>.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 
+                <div class="field is-horizontal">
+                    <div class="field-label"></div>
+                    <div class="field-body">
+                        <div class="field is-expanded">
+                            <div class="field has-addons">
+                                <p class="control is-expanded has-icons-left has-icons-right">
+                                    <input class="input is-small" id="email" type="email" placeholder="E-Mail">
+                                    <span class="icon is-small is-left">
+                                        <i class="fas fa-envelope"></i>
+                                    </span>
+                                    <span class="icon is-small is-right hide">
+                                        <i class="fas fa-check"></i>
+                                    </span>
+                                </p>
+                            </div>
+                            <p class="help" style="text-align: left;">Deine E-Mail Adresse und / oder Telefonnummer zur
+                                Kontaktaufnahme.</p>
+                        </div>
+                    </div>
+                </div>
+                -->
+            </section>
+
+
+            <section id="SEPAdigitalPRform" style="display: inline-block; margin-top: 30px;">
+                <!--  ✱ ✱ ✱  S€PA.digital pay button  ✱ ✱ ✱  -->
+                <button class="w3c-pr-btn-checkout button is-medium is-success">
+                    <span class="icon is-small">
+                        <i class="fas fa-check"></i>
+                    </span>
+                    <span>BUCH Abo 📚 Jetzt Jahreskarte kaufen</span>
+                </button>
+
+                <div id="w3c-pr-msg" class="hide"></div>
+                <div id="w3c-pr-btn-install" class="hide">⚡ S€PA.digital</div>
+                <!--  ✱ ✱ ✱  ✔️ S€PA.digital button added  ✱ ✱ ✱  -->
+            </section>
+
+            <section id="SEPAdigitalPRcode" style="display: none; margin-top: 30px;">
+                <div class="level" style="max-width: 500px; margin: 0 auto;">
+                    <div class="level-right is-pulled-right">
+                        <div class="level-item">
+                            <img style="transform: rotate(90deg); margin: 21px 0 21px 0; width: 250px;"
+                                src="https://bulma.io/images/placeholders/128x128.png">
+                        </div>
+                    </div>
+                    <div class="level-left is-pulled-left" style="justify-content: left;">
+                        <div class="level-item" style="justify-content: left; text-align: left;">
+                            <ul>
+                                <li>
+                                    <h1 style="margin: 0;" class="is-size-4 is-clearfix">
+                                        SEPA.digital TX amount
+                                    </h1>
+                                </li>
+                                <li>
+                                    <h4 style="margin: 6px 0 0 0;" class="is-clearfix">
+                                        SEPA.digital TX Reference
+                                    </h4>
+                                </li>
+                                <li>
+                                    <h2 class="level-item is-clearfix _is-size-4"
+                                        style="text-align: left; margin: 0; align-items: left; justify-content: left;">
+                                        SEPA.digital TX recipient
+                                    </h2>
+                                </li>
+                                <li>
+                                    <h3 class="level-item is-clearfix" style="margin: 6px 0 0 0;">
+                                        <small>SEPA.digital TX IBAN</small>
+                                    </h3>
+                                </li>
+                                <li>
+                                    <h5 class="level-item is-clearfix"
+                                        style="text-align: left; margin: 0; align-items: left; justify-content: left;">
+                                        <small>SEPA.digital TX URI</small>
+                                    </h5>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="level" style="margin-top: 42px">
+                    <p class="level-item has-text-centered">
+                        <small>
+                            <strong>Bezahlen</strong>❔ Scanne den
+                            <abbr title="* Euroraum - Single Euro Payments Area">SEPA</abbr> <abbr
+                                title="* 2D Barcode - Quick Response code">QR Code</abbr>
+                            <a title="Bezahlen war noch nie so einfach. Mit der Raiffeisen ELBA-App und dem integrierten QR-Code-Scann. [Video]"
+                                href="https://youtu.be/iJDTw9eROk4" target="_blank">
+                                mit deiner Bank-App
+                            </a> oder überweise den Betrag manuell 🖊️
+                        </small>
+                    </p>
+                </div>
+            </section>
+
+            <section id="SEPAdigitalPRsuccess" style="display: none;">
+                <div class="container bgGif" style="top: -30px; margin-top: 42px; min-height: 360px; min-width: 480px;">
+                    <i class="far fa-check-circle _is-size-1 has-text-success"
+                        style="font-size: 142px; margin: 100px auto"></i>
+                </div>
+            </section>
+        </section>
+    </div>
+
+    <footer class="footer hide-print">
+        <div class="content has-text-centered"></div>
+        <small>
+            ©️ <a href="https://SEPA.digital" target="_blank">S€PA.digital ― Institut für Zahlungsverkehr</a><br />
+            📞 <a href="tel:+43274244303">+43 2742 44 303</a> &nbsp;&nbsp; 📧 &nbsp; <a
+                href="mailto:inbox/@/SEPA/dot/digital">inbox@SEPA.digital</a>
+        </small>
+        </div>
+    </footer>
+
+    <!--  ✱ ✱ ✱  Add the S€PA.digital Payment Request API  ✱ ✱ ✱  -->
+
+    <!-- add some $('cash') -- used for dom manipulation like jQuery & Co -->
+    <script src="https://cdn.jsdelivr.net/npm/cash-dom@6.0.2/dist/cash.min.js"></script>
+
+    <!-- W3C Payment Request API for {Instant} SEPA Credit Transfer via SEPA.digital -->
+    <script src="/pay/w3c-pr-api.js?032308"></script>
+    <script src="/pay/A-bu.ch.js?032308"></script>
+    <script src="/pay.js?032308"></script>
+    <!-- script src="/pay/merchant.js?032308"></script -->
+
+    <script src="https://cdn.jsdelivr.net/npm/iban@0.0.14/iban.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsonld@3.0.1/dist/jsonld.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/localforage@1.7.3/dist/localforage.min.js"></script>
+    <!--  ✱ ✱ ✱  ✔️ S€PA.digital Pay is now ready #ZeroFees ✱ ✱ ✱  -->
 
 </body>
 
 </html>
-<!--
-	Solid State by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
+
+<!-- ✱ ✱ ✱ 
+
+    👩‍💻 `python3 -m http.server 8042 && open http://localhost:8042`
+
+
+    ╭━━━┳━━━┳━━━┳━━━╮╱╱╭╮╱╱╱╱╭╮╱╱╱╭╮
+    ┃╭━╮┃╭━━┫╭━╮┃╭━╮┃╱╱┃┃╱╱╱╭╯╰╮╱╱┃┃
+    ┃╰━━┫╰━━┫╰━╯┃┃╱┃┃╭━╯┣┳━━╋╮╭╋━━┫┃
+    ╰━━╮┃╭━━┫╭━━┫╰━╯┃┃╭╮┣┫╭╮┣┫┃┃╭╮┃┃
+    ┃╰━╯┃╰━━┫┃╱╱┃╭━╮┣┫╰╯┃┃╰╯┃┃╰┫╭╮┃╰╮
+    ╰━━━┻━━━┻╯╱╱╰╯╱╰┻┻━━┻┻━╮┣┻━┻╯╰┻━╯
+    ╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╭━╯┃
+    ╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╰━━╯
+
+
+
+    ____________________________________________________
+    |____________________________________________________|
+    | __     __   ____   ___ ||  ____    ____     _  __  |
+    ||  |__ |--|_| || |_|   |||_|**|*|__|+|+||___| ||  | |
+    ||==|^^||--| |=||=| |=*=||| |~~|~|  |=|=|| | |~||==| |
+    ||  |##||  | | || | |JRO|||-|  | |==|+|+||-|-|~||__| |
+    ||__|__||__|_|_||_|_|___|||_|__|_|__|_|_||_|_|_||__|_|
+    ||_______________________||__________________________|
+    | _____________________  ||      __   __  _  __    _ |
+    ||=|=|=|=|=|=|=|=|=|=|=| __..\/ |  |_|  ||#||==|  / /|
+    || | | | | | | | | | | |/\ \  \\|++|=|  || ||==| / / |
+    ||_|_|_|_|_|_|_|_|_|_|_/_/\_.___\__|_|__||_||__|/_/__|
+    |____________________ /\~()/()~//\ __________________|
+    | __   __    _  _     \_  (_ .  _/ _    ___     _____|
+    ||~~|_|..|__| || |_ _   \ //\\ /  |=|__|~|~|___| | | |
+    ||--|+|^^|==|1||2| | |__/\ __ /\__| |==|x|x|+|+|=|=|=|
+    ||__|_|__|__|_||_|_| /  \ \  / /  \_|__|_|_|_|_|_|_|_|
+    |_________________ _/    \/\/\/    \_ _______________|
+    | _____   _   __  |/      \../      \|  __   __   ___|
+    ||_____|_| |_|##|_||   |   \/ __|   ||_|==|_|++|_|-|||
+    ||______||=|#|--| |\   \   o    /   /| |  |~|  | | |||
+    ||______||_|_|__|_|_\   \  o   /   /_|_|__|_|__|_|_|||
+    |_________ __________\___\____/___/___________ ______|
+    |__    _  /    ________     ______           /| _ _ _|
+    |\ \  |=|/   //    /| //   /  /  / |        / ||%|%|%|
+    | \/\ |*/  .//____//.//   /__/__/ (_)      /  ||=|=|=|
+    __|  \/\|/   /(____|/ //                    /  /||~|~|~|__
+    |___\_/   /________//   ________         /  / ||_|_|_|
+    |___ /   (|________/   |\_______\       /  /| |______|
+        /                  \|________)     /  / | |
+
+
+🍸 👧 😘  ✱ ✱ ✱ Team der Bücherei Kirchstetten, NÖ  ✱  http://buecherei-kirchstetten.noebib.at ✱ ✱ ✱  📚 🏘️ 🧑🏽‍🤝‍🧑🏼
+🏆 📸 😊  http://image.treffpunkt-bibliothek.at/image.asp?guid={7922E077-52AF-49A7-99EC-647BF2FB03E8}  ✅
+
+✱ ✱ ✱ -->
