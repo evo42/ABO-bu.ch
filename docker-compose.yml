@@ -3,7 +3,7 @@ version: '2'
 services:
 
   website:
-    image: rg.fr-par.scw.cloud/abuch/a-bu.ch:latest
+    image: rg.fr-par.scw.cloud/sofort/a-bu.ch:latest
     restart: always
     ports:
       - "80:80"
