@@ -1,4 +1,4 @@
-sanic == 19.9 # 19.6.3 # 19.12
+sanic == 20.12.7 # 19.6.3 # 19.12
 # sanic-cors
 sqlalchemy
 python-stdnum
